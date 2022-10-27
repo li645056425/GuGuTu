@@ -11,21 +11,17 @@ const { ccclass, property } = _decorator;
 
 @ccclass("RabbitController")
 export class RabbitController extends Component {
-  /* class member could be defined like this */
-  // dummy = '';
+  @property({ displayName: "每秒移动距离", type: Number, step: 1 })
+  public moveSpeed;
+  @property({ displayName: "路宽", type: Number, step: 1 })
+  public roadWidth;
+  @property({ type: Animation })
+  public animation: Animation | null = null;
 
-  /* use `property` decorator if your want the member to be serializable */
-  // @property
-  // serializableDummy = 0;
-
-  //   @property({ type: Animation })
-  //   public BodyAnim: Animation | null = null;
-
-  // for fake tween
   // 是否接收到跳跃指令
   private _startJump: boolean = false;
-  // 跳跃步长
-  private _jumpStep: number = 0;
+  // 是否可以跳跃
+  private _canJump: boolean = false;
   // 当前跳跃时间
   private _curJumpTime: number = 0;
   // 每次跳跃时长
@@ -40,38 +36,16 @@ export class RabbitController extends Component {
   private _targetPos: Vec3 = new Vec3();
 
   start() {
-    // Your initialization goes here.
-    console.log("PlayerController start");
-  }
-
-  setInputActive(active: boolean) {
-    if (active) {
-      input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
-    } else {
-      input.off(Input.EventType.MOUSE_UP, this.onMouseUp, this);
-    }
-  }
-
-  onMouseUp(event: EventMouse) {
-    this.jumpByStep(-1.5);
-    // if (this.BodyAnim && event.getButton() == 2) {
-    //   this.BodyAnim.play("JumpRight");
-    // }
-  }
-
-  jumpByStep(step: number) {
-    if (this._startJump) {
-      return;
-    }
-    this._startJump = true;
-    this._jumpStep = step;
-    this._curJumpTime = 0;
-    this._curJumpSpeed = this._jumpStep / this._jumpTime;
-    this.node.getPosition(this._curPos);
-    Vec3.add(this._targetPos, this._curPos, new Vec3(0, this._jumpStep, 0));
+    console.log("RabbitController start");
+    this._curPos = this.node.getPosition();
+    this.setInputActive(true);
   }
 
   update(deltaTime: number) {
+    /* 向前移动 */
+    this._curPos.y += (this.moveSpeed / 1000) * deltaTime;
+    this.node.setPosition(this._curPos);
+    /* 左右跳动 */
     if (this._startJump) {
       this._curJumpTime += deltaTime;
       if (this._curJumpTime > this._jumpTime) {
@@ -81,10 +55,47 @@ export class RabbitController extends Component {
       } else {
         // tween
         this.node.getPosition(this._curPos);
-        this._deltaPos.y = this._curJumpSpeed * deltaTime;
+        this._deltaPos.x = this._curJumpSpeed * deltaTime;
         Vec3.add(this._curPos, this._curPos, this._deltaPos);
         this.node.setPosition(this._curPos);
       }
+    }
+  }
+
+  setInputActive(active: boolean) {
+    if (active) {
+      input.on(Input.EventType.MOUSE_MOVE, this.onMouseMove, this);
+      input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
+    } else {
+      input.off(Input.EventType.MOUSE_MOVE, this.onMouseMove, this);
+      input.off(Input.EventType.MOUSE_UP, this.onMouseUp, this);
+    }
+  }
+
+  onMouseMove(e: EventMouse) {
+    // x轴跳跃
+    if (!this._startJump && this._canJump) {
+      if (e.getUIDeltaX() > this.roadWidth / 2) {
+        this.jumpTo(this.roadWidth);
+      } else if (e.getUIDeltaX() < -this.roadWidth / 2) {
+        this.jumpTo(-this.roadWidth);
+      }
+    }
+  }
+
+  onMouseUp(e: EventMouse) {
+    this._canJump = true;
+  }
+
+  jumpTo(step) {
+    this._startJump = true;
+    this._canJump = false;
+    this._curJumpTime = 0;
+    this._curJumpSpeed = step / this._jumpTime;
+    this.node.getPosition(this._curPos);
+    Vec3.add(this._targetPos, this._curPos, new Vec3(0, step, 0));
+    if (this.animation) {
+      this.animation.play("Jump");
     }
   }
 }
