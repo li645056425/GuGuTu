@@ -13,29 +13,46 @@ const { ccclass, property } = _decorator;
 
 @ccclass("RoadController")
 export class RoadController extends Component {
-  @property({ displayName: "每秒移动距离", type: Number, step: 1 })
-  public disPerSec;
-  @property({ displayName: "上一个Grass节点", type: Node })
-  public beforeGrass: Node | null = null;
+  @property({ displayName: "移动速度", type: Number, step: 1 })
+  public moveSpeed = 1;
   @property({ type: Prefab })
   public grassPrfb: Prefab | null = null;
   @property({ type: Prefab })
   public mushroomPrfb: Prefab | null = null;
 
+  private _curPos: Vec3 = new Vec3();
   private _curSca: Vec3 = new Vec3(1, 1, 1);
-  private _grassNodes = [];
-  private _grassCount = 0;
+  private _grassGroupCount = 15; // 每组草坪的数量，一组能覆盖整个屏幕
+  private _grassNodes = []; // 当前存在的草坪节点
+  private _grassCount = 0; // 总共生成的草坪数量
+  private _lastAppendY = this._grassGroupCount; // 上一次扩展草坪时的Y坐标，一次要到第二组草坪结束时才扩展
 
   start() {
+    this.node.getPosition(this._curPos);
     this.node.getScale(this._curSca);
+    this.node.removeAllChildren();
+    this.appendRoad();
+    this.appendRoad();
     this.appendRoad();
   }
 
-  update(deltaTime: number) {}
+  update(deltaTime: number) {
+    /* 向后移动 */
+    this._curPos.y += this.moveSpeed * deltaTime;
+    this.node.setPosition(this._curPos);
+    // console.log(this._curPos.y, this._curSca.y);
+    /* 每移动一定距离，扩展草坪 */
+    if (this._curPos.y - this._lastAppendY > this._grassGroupCount) {
+      this._lastAppendY = this._curPos.y;
+      this.appendRoad();
+      this.recycleRoad();
+      console.log("appendRoad & recycleRoad", this._curPos.y);
+    }
+  }
 
   appendRoad() {
-    for (let i = 0; i < 10; i++) {
-      const hasMushroom = getProbablyResult(30);
+    for (let i = 0; i < this._grassGroupCount; i++) {
+      const hasMushroom = getProbablyResult(10);
       const grassNode = instantiate(this.grassPrfb);
       grassNode.setPosition(0, -this._grassCount, 0);
       this.node.addChild(grassNode);
@@ -50,13 +67,9 @@ export class RoadController extends Component {
   }
 
   recycleRoad() {
-    const deleteNodes = this._grassNodes.splice(0, 10);
+    const deleteNodes = this._grassNodes.splice(0, this._grassGroupCount);
     deleteNodes.forEach((node) => {
       this.node.removeChild(node);
     });
-  }
-
-  getRoadLength() {
-    return this._curSca.y * this._grassCount;
   }
 }

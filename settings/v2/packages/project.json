@@ -4,5 +4,22 @@
       "width": 750,
       "height": 1624
     }
+  },
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "RABBIT"
+      },
+      {
+        "index": 2,
+        "name": "MUSHROOM"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 1,
+      "1": 4,
+      "2": 2
+    }
   }
 }

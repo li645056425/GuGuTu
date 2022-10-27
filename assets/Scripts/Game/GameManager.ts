@@ -6,6 +6,7 @@ import {
   Node,
   CCInteger,
   Vec3,
+  view,
 } from "cc";
 import { RabbitController } from "./RabbitController";
 import { RoadController } from "./RoadController";
@@ -24,11 +25,5 @@ export class GameManager extends Component {
     console.log("GameManager start");
   }
 
-  update(deltaTime: number) {
-    this.rabbitCtrl.node.getPosition(this._rabbitPos);
-    if (this._rabbitPos.y >= this.roadCtrl.getRoadLength()) {
-      this.roadCtrl.appendRoad();
-      this.roadCtrl.recycleRoad();
-    }
-  }
+  update(deltaTime: number) {}
 }
