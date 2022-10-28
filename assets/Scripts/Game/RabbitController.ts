@@ -16,6 +16,8 @@ import {
 import { ColliderGroup } from "../../Constants/Collider";
 const { ccclass, property } = _decorator;
 
+const visibleSize = view.getVisibleSize();
+
 @ccclass("RabbitController")
 export class RabbitController extends Component {
   @property({ displayName: "路宽", type: Number, step: 1 })
@@ -23,7 +25,6 @@ export class RabbitController extends Component {
   @property({ type: Animation })
   public animation: Animation | null = null;
 
-  private _viewSize = view.getVisibleSize();
   private _touchStartX;
 
   // 是否接收到跳跃指令
@@ -43,7 +44,6 @@ export class RabbitController extends Component {
 
   start() {
     console.log("RabbitController start");
-    console.log("_viewSize", this._viewSize);
     this.node.getPosition(this._curPos);
     this.setInputActive(true);
     this.setColliderActive(true);
@@ -95,9 +95,9 @@ export class RabbitController extends Component {
     // x轴跳跃
     if (!this._startJump && this._canJump) {
       const deltaX = e.getLocationX() - this._touchStartX;
-      if (deltaX > this._viewSize.width / 10) {
+      if (deltaX > visibleSize.width / 10) {
         this.jump(this.roadWidth);
-      } else if (deltaX < -this._viewSize.width / 10) {
+      } else if (deltaX < -visibleSize.width / 10) {
         this.jump(-this.roadWidth);
       }
     }
@@ -116,10 +116,10 @@ export class RabbitController extends Component {
 
   jump(step) {
     this.node.getPosition(this._targetPos);
-    if (this._targetPos.x <= -2 && step < 0) {
+    if (this._targetPos.x <= -this.roadWidth && step < 0) {
       return;
     }
-    if (this._targetPos.x >= 2 && step > 0) {
+    if (this._targetPos.x >= this.roadWidth && step > 0) {
       return;
     }
     console.log("jumpTo", step);

@@ -16,8 +16,6 @@ const { ccclass, property } = _decorator;
 export class GameManager extends Component {
   @property({ type: RabbitController })
   public rabbitCtrl: RabbitController | null = null;
-  @property({ type: RoadController })
-  public roadCtrl: RoadController | null = null;
 
   private _rabbitPos: Vec3 = new Vec3();
 

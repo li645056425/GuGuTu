@@ -1,8 +1,10 @@
 {
   "general": {
     "designResolution": {
-      "width": 750,
-      "height": 1624
+      "width": 375,
+      "height": 812,
+      "fitHeight": false,
+      "fitWidth": true
     }
   },
   "physics": {
@@ -14,12 +16,22 @@
       {
         "index": 2,
         "name": "MUSHROOM"
+      },
+      {
+        "index": 3,
+        "name": "GRASS"
+      },
+      {
+        "index": 4,
+        "name": "BORDER"
       }
     ],
     "collisionMatrix": {
       "0": 1,
       "1": 4,
-      "2": 2
+      "2": 2,
+      "3": 16,
+      "4": 8
     }
   }
 }
