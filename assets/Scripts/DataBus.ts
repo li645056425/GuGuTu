@@ -6,6 +6,8 @@ let instance;
 export default class DataBus {
   private _gameScore = null;
 
+  public userInfoButton = null
+
   constructor() {
     if (instance) return instance;
 
