@@ -5,7 +5,8 @@
 library/
 temp/
 local/
-build/
+build/wechatgame/*
+!build/wechatgame/openDataContext/
 profiles/
 native
 #//////////////////////////

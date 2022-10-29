@@ -1,11 +1,11 @@
-const style = require("./render/style");
-const template = require("./render/template");
+const friendRankListStyle = require("./renderFriendRankList/style");
+const getFriendRankListTemplate = require("./renderFriendRankList/template");
 const Layout = require("./engine").default;
 
 let __env = GameGlobal.wx || GameGlobal.tt || GameGlobal.swan;
 let sharedCanvas = __env.getSharedCanvas();
 let sharedContext = sharedCanvas.getContext("2d");
-function draw() {
+function draw({ template, style }) {
   Layout.clear();
   Layout.init(template, style);
   Layout.layout(sharedContext);
@@ -20,14 +20,13 @@ function updateViewPort(data) {
   });
 }
 
-__env.onMessage((data) => {
-  console.log("onMessage", data);
-  if (data.type == "renderFriendRankList") {
-    // updateViewPort();
-    draw();
-  }
+__env.onMessage(async (data) => {
   if (data.type === "engine" && data.event === "viewport") {
     updateViewPort(data);
-    //     draw();
+  } else if (data.type == "renderFriendRankList") {
+    draw({
+      template: await getFriendRankListTemplate(),
+      style: friendRankListStyle,
+    });
   }
 });
