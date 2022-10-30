@@ -14,7 +14,7 @@ const { ccclass, property } = _decorator;
 @ccclass("HomeController")
 export class HomeController extends Component {
   @property({ type: FriendRankDialogController })
-  public friendRankDialogCtrlr: FriendRankDialogController | null = null;
+  public friendRankDialogCtrl: FriendRankDialogController | null = null;
 
   start() {}
 
@@ -27,6 +27,6 @@ export class HomeController extends Component {
 
   onFriendRankButtonClicked() {
     console.log("onFriendRankButtonClicked");
-    this.friendRankDialogCtrlr.showDialog();
+    this.friendRankDialogCtrl.showDialog();
   }
 }

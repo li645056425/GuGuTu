@@ -44,35 +44,6 @@ export class FriendRankDialogController extends Component {
     });
   }
 
-  drawBorder() {
-    const graphics = this.borderNode.getComponent(Graphics);
-    const transform = this.borderNode.getComponent(UITransform);
-    graphics.roundRect(
-      -transform.width / 2,
-      -transform.height / 2,
-      transform.width,
-      transform.height,
-      20
-    );
-    graphics.stroke();
-    graphics.fill();
-  }
-
-  drawTitle() {
-    const graphics = this.titleNode.getComponent(Graphics);
-    const transform = this.titleNode.getComponent(UITransform);
-
-    graphics.roundRect(
-      -transform.width / 2,
-      -transform.height / 2,
-      transform.width,
-      transform.height,
-      16
-    );
-    graphics.stroke();
-    graphics.fill();
-  }
-
   onFriendRankCloseButtonClicked() {
     console.log("onFriendRankCloseButtonClicked");
     this.hideDialog();

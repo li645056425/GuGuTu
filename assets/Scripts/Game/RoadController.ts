@@ -9,7 +9,7 @@ import {
   instantiate,
   view,
 } from "cc";
-import { getProbablyResult } from "../../Utils/Common";
+import { getProbablyResult } from "../Utils/Common";
 const { ccclass, property } = _decorator;
 
 const visibleSize = view.getVisibleSize();
