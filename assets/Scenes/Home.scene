@@ -630,7 +630,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "_parent": {
       "__id__": 16
     },
@@ -978,7 +978,7 @@
   {
     "__type__": "cc.Node",
     "_name": "Label",
-    "_objFlags": 512,
+    "_objFlags": 0,
     "_parent": {
       "__id__": 27
     },
@@ -1565,8 +1565,8 @@
     "_fps": 60,
     "_designResolutionSize": {
       "__type__": "cc.Size",
-      "width": 255,
-      "height": 517
+      "width": 510,
+      "height": 1034
     },
     "_id": "e5SByxsIZN77f75u2ZsajB"
   },

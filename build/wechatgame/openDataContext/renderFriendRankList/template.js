@@ -32,31 +32,40 @@ function getTemplate() {
           .map(
             (rankItem, index) =>
               `
-            <view class="listItem ${index % 2 ? "grayBg" : ""}">
-              <view class="listItemUser">
-                <image class="listItemAvatar" src="${
-                  rankItem.avatarUrl
-                }"></image>
-                <text class="listItemName" value="${rankItem.nickname}"></text>
+            <view class="listItem">
+              <view class="listItemNo listItemNo${index}">
+                <text class="listItemNoNum" value="${index + 1}"></text>
               </view>
-              <view class="listItemLingzhi">
-                <image class="listItemLingzhiImg" src="openDataContext/renderFriendRankList/lingzhi.png"></image>
-                <text class="listItemLingzhiNum" value="${
-                  rankItem.lingzhiNum
-                }"></text>
-              </view>
-              <view class="listItemScore">
-                <image class="listItemScoreImg" src="openDataContext/renderFriendRankList/mushroom.png"></image>
-                <text class="listItemScoreNum" value="${
-                  rankItem.scoreNum
-                }"></text>
+              <view class="listItemWrap listItemWrap${index}">
+                <view class="listItemUser">
+                  <image class="listItemAvatar" src="${
+                    rankItem.avatarUrl
+                  }"></image>
+                  <text class="listItemName" value="${
+                    rankItem.nickname
+                  }"></text>
+                </view>
+                <view class="listItemLingzhi">
+                  <image class="listItemLingzhiImg" src="openDataContext/renderFriendRankList/lingzhi.png"></image>
+                  <text class="listItemLingzhiNum" value="${
+                    rankItem.lingzhiNum
+                  }"></text>
+                </view>
+                <view class="listItemScore">
+                  <image class="listItemScoreImg" src="openDataContext/renderFriendRankList/mushroom.png"></image>
+                  <text class="listItemScoreNum" value="${
+                    rankItem.scoreNum
+                  }"></text>
+                </view>
               </view>
             </view>
           `
           )
           .join("");
         resolve(
-          `<scrollview class="list" scrollY="true"> ${list} </scrollview>`
+          `<view class="container">
+            <scrollview class="list" scrollX="true" scrollY="true"> ${list} </scrollview>
+          </view>`
         );
       },
       fail: (err) => {

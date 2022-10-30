@@ -1,4 +1,4 @@
-const renderFriendRankListStyle = require("./renderFriendRankList/style");
+const getRenderFriendRankListStyle = require("./renderFriendRankList/style");
 const getRenderFriendRankListTemplate = require("./renderFriendRankList/template");
 const Layout = require("./engine").default;
 
@@ -27,7 +27,7 @@ __env.onMessage(async (data) => {
   } else if (data.type === "renderFriendRankList") {
     draw({
       template: await getRenderFriendRankListTemplate(),
-      style: renderFriendRankListStyle,
+      style: getRenderFriendRankListStyle(),
     });
   }
 });

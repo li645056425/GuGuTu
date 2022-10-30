@@ -4310,7 +4310,7 @@ var ScrollView = /*#__PURE__*/function (_View) {
         child.layoutBox.absoluteY -= _this5.pageHeight * pageIndex;
 
         if (child.checkNeedRender()) {
-          _this5.canvasMap[pageIndex].elements.push({
+          _this5.canvasMap[pageIndex]?.elements.push({
             element: child,
             box: child.layoutBox
           });
