@@ -6,7 +6,7 @@ module.exports = function () {
   const dialogWidth = canvasWidth * 0.8;
   const dialogHeight = canvasWidth * 1.5;
   const dialogBorder = 10;
-  const dialogPadding = 10;
+  const dialogPadding = 20;
   const titleWidth = dialogWidth * 0.5;
   const titleHeight = titleWidth * 0.3;
   const closeWidth = titleHeight * 1.5;
@@ -23,10 +23,19 @@ module.exports = function () {
 
   return {
     container: {
+      position: "relative",
       width: canvasWidth,
       height: canvasHeight,
       alignItems: "center",
       justifyContent: "center",
+    },
+
+    close: {
+      position: "absolute",
+      width: closeWidth,
+      height: closeHeight,
+      right: 0,
+      top: (canvasHeight - dialogHeight) / 2 - closeHeight,
     },
 
     dialog: {
@@ -35,19 +44,8 @@ module.exports = function () {
       height: dialogHeight,
       backgroundColor: "#000000",
       borderRadius: dialogWidth * 0.1,
-      paddingLeft: dialogBorder * 2,
-      paddingRgiht: dialogBorder * 2,
-      paddingTop: dialogBorder + titleHeight / 2,
-    },
-
-    dialogBorder: {
-      position: "absolute",
-      left: dialogBorder,
-      top: dialogBorder,
-      width: dialogWidth - dialogBorder * 2,
-      height: dialogHeight - dialogBorder * 2,
-      borderRadius: dialogWidth * 0.1,
-      backgroundColor: "#ffffff",
+      paddingLeft: dialogBorder,
+      paddingTop: dialogBorder,
     },
 
     title: {
@@ -64,18 +62,18 @@ module.exports = function () {
       color: "#ffffff",
     },
 
-    close: {
-      position: "absolute",
-      width: closeWidth,
-      height: closeHeight,
-      right: -closeWidth / 2 + dialogBorder / 2,
-      top: -closeHeight / 2 + dialogBorder / 2,
+    dialogWrap: {
+      width: dialogWidth - dialogBorder * 2,
+      height: dialogHeight - dialogBorder * 2,
+      borderRadius: dialogWidth * 0.1,
+      backgroundColor: "#ffffff",
+      paddingLeft: dialogPadding,
+      paddingTop: titleHeight / 2,
     },
 
     list: {
       width: listWidth,
       height: listWHeight,
-      backgroundColor: "#ffffff",
     },
 
     listItem: {

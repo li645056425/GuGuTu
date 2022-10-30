@@ -65,11 +65,12 @@ function getTemplate() {
         resolve(
           `<view class="container">
             <view class="dialog">
-              <view class="dialogBorder"></view>
+              <view class="dialogWrap">
+                <scrollview class="list" scrollY="true"> ${list} </scrollview>
+              </view>
               <text class="title" value="好友排行榜"></text>
-              <image class="close" src="openDataContext/renderFriendRankList/close.png"></image>
-              <scrollview class="list"> ${list} </scrollview>
             </view>
+            <image class="close" src="openDataContext/renderFriendRankList/close.png"></image>
           </view>`
         );
       },
