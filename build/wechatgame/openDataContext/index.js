@@ -1,5 +1,5 @@
-const friendRankListStyle = require("./renderFriendRankList/style");
-const getFriendRankListTemplate = require("./renderFriendRankList/template");
+const renderFriendRankListStyle = require("./renderFriendRankList/style");
+const getRenderFriendRankListTemplate = require("./renderFriendRankList/template");
 const Layout = require("./engine").default;
 
 let __env = GameGlobal.wx || GameGlobal.tt || GameGlobal.swan;
@@ -21,12 +21,13 @@ function updateViewPort(data) {
 }
 
 __env.onMessage(async (data) => {
+  console.log("onMessage", data);
   if (data.type === "engine" && data.event === "viewport") {
     updateViewPort(data);
-  } else if (data.type == "renderFriendRankList") {
+  } else if (data.type === "renderFriendRankList") {
     draw({
-      template: await getFriendRankListTemplate(),
-      style: friendRankListStyle,
+      template: await getRenderFriendRankListTemplate(),
+      style: renderFriendRankListStyle,
     });
   }
 });
