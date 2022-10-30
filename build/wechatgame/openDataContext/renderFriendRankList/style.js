@@ -3,7 +3,13 @@ module.exports = function () {
   const canvasWidth = sharedCanvas.width;
   const canvasHeight = sharedCanvas.height;
 
-  const rowWidth = canvasWidth;
+  const dialogWidth = canvasWidth * 0.8;
+  const dialogHeight = canvasWidth * 1.5;
+  const titleWidth = dialogWidth * 0.5;
+  const titleHeight = titleWidth * 0.3;
+  const listWidth = dialogWidth - 20;
+  const listWHeight = dialogHeight - titleHeight / 2;
+  const rowWidth = listWidth;
   const rowHeight = rowWidth * 0.2;
   const rowNoWidth = rowHeight * 0.7;
   const rowWrapWidth = rowWidth - rowNoWidth * 1.2;
@@ -14,13 +20,41 @@ module.exports = function () {
     container: {
       width: canvasWidth,
       height: canvasHeight,
-      // backgroundColor: "#ff0000",
-      backgroundColor: "#ffffff",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+
+    dialog: {
+      position: "relative",
+      width: dialogWidth,
+      height: dialogHeight,
+      borderWidth: 5,
+      borderColor: "#000000",
+      borderRadius: dialogWidth * 0.1,
+      paddingLeft: 10,
+      paddingRgiht: 10,
+      paddingTop: titleHeight / 2,
+    },
+
+    title: {
+      position: "absolute",
+      width: titleWidth,
+      height: titleHeight,
+      left: (dialogWidth - titleWidth) / 2,
+      top: -titleHeight / 2,
+    },
+
+    close: {
+      position: "absolute",
+      width: titleHeight,
+      height: titleHeight,
+      right: -titleHeight / 2,
+      top: -titleHeight / 2,
     },
 
     list: {
-      width: canvasWidth,
-      height: canvasHeight,
+      width: listWidth,
+      height: listWHeight,
     },
 
     listItem: {
@@ -68,7 +102,7 @@ module.exports = function () {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      borderRadius: 12,
+      borderRadius: rowHeight * 0.3,
       backgroundColor: "#f0f0f0",
     },
 

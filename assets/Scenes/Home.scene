@@ -1426,10 +1426,10 @@
     "__prefab": null,
     "_alignFlags": 45,
     "_target": null,
-    "_left": 50,
-    "_right": 50,
-    "_top": 130,
-    "_bottom": 130,
+    "_left": 0,
+    "_right": 0,
+    "_top": 0,
+    "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -1507,7 +1507,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -7.5,
+      "y": -12.5,
       "z": 0
     },
     "_lrot": {
@@ -1543,8 +1543,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 255,
-      "height": 517
+      "width": 375,
+      "height": 527
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1565,8 +1565,8 @@
     "_fps": 60,
     "_designResolutionSize": {
       "__type__": "cc.Size",
-      "width": 510,
-      "height": 1034
+      "width": 750,
+      "height": 1054
     },
     "_id": "e5SByxsIZN77f75u2ZsajB"
   },
@@ -1581,10 +1581,10 @@
     "__prefab": null,
     "_alignFlags": 45,
     "_target": null,
-    "_left": 60,
-    "_right": 60,
-    "_top": 155,
-    "_bottom": 140,
+    "_left": -50,
+    "_right": -50,
+    "_top": 25,
+    "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -1823,7 +1823,7 @@
     "_target": null,
     "_left": 0,
     "_right": 0,
-    "_top": 105,
+    "_top": -25,
     "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
@@ -2001,8 +2001,8 @@
     "_alignFlags": 33,
     "_target": null,
     "_left": 0,
-    "_right": 25,
-    "_top": 105,
+    "_right": -25,
+    "_top": -25,
     "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
@@ -2095,8 +2095,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 375,
-      "height": 812
+      "width": 275,
+      "height": 552
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2173,10 +2173,10 @@
     "__prefab": null,
     "_alignFlags": 45,
     "_target": null,
-    "_left": 0,
-    "_right": 0,
-    "_top": 0,
-    "_bottom": 0,
+    "_left": 50,
+    "_right": 50,
+    "_top": 130,
+    "_bottom": 130,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,

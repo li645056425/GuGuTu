@@ -64,7 +64,11 @@ function getTemplate() {
           .join("");
         resolve(
           `<view class="container">
-            <scrollview class="list" scrollX="true" scrollY="true"> ${list} </scrollview>
+            <view class="dialog">
+              <text class="title" value="好友排行榜"></text>
+              <image class="close" src="openDataContext/renderFriendRankList/close.png"></image>
+              <scrollview class="list" scrollY="true"> ${list} </scrollview>
+            </view>
           </view>`
         );
       },

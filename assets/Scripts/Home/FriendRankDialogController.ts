@@ -25,13 +25,10 @@ export class FriendRankDialogController extends Component {
   public listNode = null;
 
   private _animation: Animation = null;
-  private _listTransform: UITransform = null;
-  private _listPos = new Vec3();
 
   start() {
     this.node.active = false;
     this._animation = this.node.getComponent(Animation);
-    this._listTransform = this.listNode.getComponent(UITransform);
     this.drawBorder();
     this.drawTitle();
   }
@@ -44,15 +41,8 @@ export class FriendRankDialogController extends Component {
     this._animation.once("stop", () => {
       if (env) {
         console.log("postMessage renderFriendRankList");
-        this.listNode.getPosition(this._listPos);
         env.getOpenDataContext().postMessage({
           type: "renderFriendRankList",
-          viewport: {
-            x: this._listPos.x,
-            y: this._listPos.y,
-            width: this._listTransform.width,
-            height: this._listTransform.height,
-          },
         });
       }
     });
