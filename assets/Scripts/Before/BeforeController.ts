@@ -1,13 +1,13 @@
 import { _decorator, Component, Node, view, director } from "cc";
 const { ccclass, property } = _decorator;
 
-@ccclass("BeforeManager")
-export class BeforeManager extends Component {
+@ccclass("BeforeController")
+export class BeforeController extends Component {
   private _userInfoButton = null;
   private _userInfoButtonDisable = false;
 
   start() {
-    console.log("BeforeManager");
+    console.log("BeforeController");
     try {
       const systemInfo = wx.getSystemInfoSync();
       const safeArea = systemInfo.safeArea;
