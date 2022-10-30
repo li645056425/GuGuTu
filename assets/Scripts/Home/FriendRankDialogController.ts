@@ -28,24 +28,30 @@ export class FriendRankDialogController extends Component {
 
   start() {
     this.node.active = false;
-    this._animation = this.node.getComponent(Animation);
-    this.drawBorder();
-    this.drawTitle();
+    // this._animation = this.node.getComponent(Animation);
+    // this.drawBorder();
+    // this.drawTitle();
   }
 
   update(deltaTime: number) {}
 
   showDialog() {
     this.node.active = true;
-    this._animation.play("Show");
-    this._animation.once("stop", () => {
-      if (env) {
-        console.log("postMessage renderFriendRankList");
-        env.getOpenDataContext().postMessage({
-          type: "renderFriendRankList",
-        });
-      }
-    });
+    if (env) {
+      console.log("postMessage renderFriendRankList");
+      env.getOpenDataContext().postMessage({
+        type: "renderFriendRankList",
+      });
+    }
+    // this._animation.play("Show");
+    // this._animation.once("stop", () => {
+    //   if (env) {
+    //     console.log("postMessage renderFriendRankList");
+    //     env.getOpenDataContext().postMessage({
+    //       type: "renderFriendRankList",
+    //     });
+    //   }
+    // });
   }
 
   hideDialog() {

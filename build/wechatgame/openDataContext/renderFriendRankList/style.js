@@ -5,10 +5,15 @@ module.exports = function () {
 
   const dialogWidth = canvasWidth * 0.8;
   const dialogHeight = canvasWidth * 1.5;
+  const dialogBorder = 10;
+  const dialogPadding = 10;
   const titleWidth = dialogWidth * 0.5;
   const titleHeight = titleWidth * 0.3;
-  const listWidth = dialogWidth - 20;
-  const listWHeight = dialogHeight - titleHeight / 2;
+  const closeWidth = titleHeight * 1.5;
+  const closeHeight = closeWidth;
+  const listWidth = dialogWidth - dialogBorder * 2 - dialogPadding * 2;
+  const listWHeight =
+    dialogHeight - dialogBorder * 2 - dialogPadding * 2 - titleHeight / 2;
   const rowWidth = listWidth;
   const rowHeight = rowWidth * 0.2;
   const rowNoWidth = rowHeight * 0.7;
@@ -28,12 +33,21 @@ module.exports = function () {
       position: "relative",
       width: dialogWidth,
       height: dialogHeight,
-      borderWidth: 5,
-      borderColor: "#000000",
+      backgroundColor: "#000000",
       borderRadius: dialogWidth * 0.1,
-      paddingLeft: 10,
-      paddingRgiht: 10,
-      paddingTop: titleHeight / 2,
+      paddingLeft: dialogBorder * 2,
+      paddingRgiht: dialogBorder * 2,
+      paddingTop: dialogBorder + titleHeight / 2,
+    },
+
+    dialogBorder: {
+      position: "absolute",
+      left: dialogBorder,
+      top: dialogBorder,
+      width: dialogWidth - dialogBorder * 2,
+      height: dialogHeight - dialogBorder * 2,
+      borderRadius: dialogWidth * 0.1,
+      backgroundColor: "#ffffff",
     },
 
     title: {
@@ -42,19 +56,26 @@ module.exports = function () {
       height: titleHeight,
       left: (dialogWidth - titleWidth) / 2,
       top: -titleHeight / 2,
+      textAlign: "center",
+      lineHeight: titleHeight,
+      fontSize: fontSize * 1.5,
+      backgroundColor: "#000000",
+      borderRadius: titleWidth * 0.1,
+      color: "#ffffff",
     },
 
     close: {
       position: "absolute",
-      width: titleHeight,
-      height: titleHeight,
-      right: -titleHeight / 2,
-      top: -titleHeight / 2,
+      width: closeWidth,
+      height: closeHeight,
+      right: -closeWidth / 2 + dialogBorder / 2,
+      top: -closeHeight / 2 + dialogBorder / 2,
     },
 
     list: {
       width: listWidth,
       height: listWHeight,
+      backgroundColor: "#ffffff",
     },
 
     listItem: {
@@ -63,7 +84,7 @@ module.exports = function () {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      marginTop: rowHeight * 0.2,
+      marginBottom: rowHeight * 0.2,
     },
 
     listItemNo: {
