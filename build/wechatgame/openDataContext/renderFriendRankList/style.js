@@ -30,14 +30,6 @@ module.exports = function () {
       justifyContent: "center",
     },
 
-    close: {
-      position: "absolute",
-      width: closeWidth,
-      height: closeHeight,
-      right: 0,
-      top: (canvasHeight - dialogHeight) / 2 - closeHeight,
-    },
-
     dialog: {
       position: "relative",
       width: dialogWidth,

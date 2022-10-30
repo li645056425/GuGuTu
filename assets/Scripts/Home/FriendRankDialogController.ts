@@ -17,41 +17,24 @@ const env = window.wx || window.tt || window.swan;
 
 @ccclass("FriendRankDialogController")
 export class FriendRankDialogController extends Component {
-  @property({ type: Node })
-  public borderNode = null;
-  @property({ type: Node })
-  public titleNode = null;
-  @property({ type: Node })
-  public listNode = null;
-
   private _animation: Animation = null;
 
   start() {
     this.node.active = false;
-    // this._animation = this.node.getComponent(Animation);
-    // this.drawBorder();
-    // this.drawTitle();
+    this._animation = this.node.getComponent(Animation);
   }
 
   update(deltaTime: number) {}
 
   showDialog() {
-    this.node.active = true;
     if (env) {
       console.log("postMessage renderFriendRankList");
       env.getOpenDataContext().postMessage({
         type: "renderFriendRankList",
       });
+      this.node.active = true;
+      this._animation.play("Show");
     }
-    // this._animation.play("Show");
-    // this._animation.once("stop", () => {
-    //   if (env) {
-    //     console.log("postMessage renderFriendRankList");
-    //     env.getOpenDataContext().postMessage({
-    //       type: "renderFriendRankList",
-    //     });
-    //   }
-    // });
   }
 
   hideDialog() {

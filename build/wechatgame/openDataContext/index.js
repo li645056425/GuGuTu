@@ -1,5 +1,8 @@
 const getRenderFriendRankListStyle = require("./renderFriendRankList/style");
-const getRenderFriendRankListTemplate = require("./renderFriendRankList/template");
+const {
+  getTemplate: getRenderFriendRankListTemplate,
+  getDataTemplate: getRenderFriendRankListDataTemplate,
+} = require("./renderFriendRankList/template");
 const Layout = require("./engine").default;
 
 let __env = GameGlobal.wx || GameGlobal.tt || GameGlobal.swan;
@@ -9,7 +12,6 @@ let sharedContext = sharedCanvas.getContext("2d");
 Layout.loadImgs([
   "openDataContext/renderFriendRankList/lingzhi.png",
   "openDataContext/renderFriendRankList/mushroom.png",
-  "openDataContext/renderFriendRankList/close.png",
 ]);
 
 function draw({ template, style }) {
@@ -27,19 +29,21 @@ function updateViewPort(data) {
   });
 }
 
-__env.onMessage(async (data) => {
+__env.onMessage((data) => {
   console.log("onMessage", data);
   if (data.type === "engine" && data.event === "viewport") {
     updateViewPort(data);
   } else if (data.type === "renderFriendRankList") {
+    const style = getRenderFriendRankListStyle();
     draw({
-      template: await getRenderFriendRankListTemplate(),
-      style: getRenderFriendRankListStyle(),
+      template: getRenderFriendRankListTemplate(),
+      style,
     });
-    const close = Layout.getElementsByClassName("close")[0];
-    close.on("touchstart", (e) => {
-      console.log("touchstart", e);
-      Layout.clearAll();
+    getRenderFriendRankListDataTemplate().then((template) => {
+      draw({
+        template,
+        style,
+      });
     });
   }
 });

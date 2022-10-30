@@ -12,7 +12,7 @@ function getScore(kvDataList) {
 }
 
 // 上述模板经过模板引擎编译成版本函数，可通过 olado.github.io/doT/index.html 在线获得
-function getTemplate() {
+function getDataTemplate() {
   return new Promise((resolve, reject) => {
     wx.getFriendCloudStorage({
       keyList: ["highestScore"],
@@ -63,15 +63,9 @@ function getTemplate() {
           )
           .join("");
         resolve(
-          `<view class="container">
-            <view class="dialog">
-              <view class="dialogWrap">
-                <scrollview class="list" scrollY="true"> ${list} </scrollview>
-              </view>
-              <text class="title" value="好友排行榜"></text>
-            </view>
-            <image class="close" src="openDataContext/renderFriendRankList/close.png"></image>
-          </view>`
+          getTemplate(
+            `<scrollview class="list" scrollY="true"> ${list} </scrollview>`
+          )
         );
       },
       fail: (err) => {
@@ -81,4 +75,19 @@ function getTemplate() {
     });
   });
 }
-module.exports = getTemplate;
+
+function getTemplate(scrollview = "") {
+  return `
+  <view class="container">
+    <view class="dialog">
+      <view class="dialogWrap">
+       ${scrollview}
+      </view>
+      <text class="title" value="好友排行榜"></text>
+    </view>
+  </view>
+`;
+}
+
+module.exports.getTemplate = getTemplate;
+module.exports.getDataTemplate = getDataTemplate;
