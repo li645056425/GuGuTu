@@ -15,8 +15,8 @@ const { ccclass, property } = _decorator;
 
 const env = window.wx || window.tt || window.swan;
 
-@ccclass("FriendRankDialogController")
-export class FriendRankDialogController extends Component {
+@ccclass("FriendRankDialog")
+export class FriendRankDialog extends Component {
   private _animation: Animation = null;
 
   start() {
@@ -42,10 +42,5 @@ export class FriendRankDialogController extends Component {
     this._animation.once("stop", () => {
       this.node.active = false;
     });
-  }
-
-  onFriendRankCloseButtonClicked() {
-    console.log("onFriendRankCloseButtonClicked");
-    this.hideDialog();
   }
 }

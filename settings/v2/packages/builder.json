@@ -1,0 +1,13 @@
+{
+  "splash-setting": {
+    "displayWatermark": false,
+    "url": "Z:\\codeprojects\\wzmxx\\GuGuTu\\assets\\Materials\\logo.png",
+    "clearColor": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "w": 1
+    },
+    "totalTime": 3000
+  }
+}
