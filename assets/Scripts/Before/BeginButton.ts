@@ -7,6 +7,7 @@ import {
   view,
   Widget,
 } from "cc";
+import { LoadProgressBar } from "./LoadProgressBar";
 const { ccclass, property } = _decorator;
 
 const wx = (window as any).wx;
@@ -15,6 +16,9 @@ const designSize = view.getDesignResolutionSize();
 
 @ccclass("BeginButton")
 export class BeginButton extends Component {
+  @property({ type: LoadProgressBar })
+  public loadProgressBar: LoadProgressBar = null;
+
   start() {
     if (!!wx) {
       this.createUserInfoButton();
@@ -25,13 +29,13 @@ export class BeginButton extends Component {
 
   createUserInfoButton() {
     const widget = this.node.getComponent(Widget);
-    console.log(widget, designSize, window.innerWidth, window.innerHeight);
-    const left = window.innerWidth * (widget.left / designSize.width);
-    const right = window.innerWidth * (widget.right / designSize.width);
-    const top = window.innerHeight * (widget.top / designSize.height);
-    const bottom = window.innerHeight * (widget.bottom / designSize.height);
-    const width = window.innerWidth - left - right;
-    const height = width / 2.343;
+    const transform = this.node.getComponent(UITransform);
+    console.log(widget.left, widget.right, widget.top, widget.bottom);
+    console.log(transform.width, transform.height);
+    const left = window.innerWidth * widget.left; // 百分比widget
+    const top = window.innerHeight * widget.top;
+    const width = window.innerWidth * (1 - widget.left - widget.right);
+    const height = width * (transform.height / transform.width);
     const userInfoButton = wx.createUserInfoButton({
       type: "image",
       image:
@@ -62,7 +66,8 @@ export class BeginButton extends Component {
   }
 
   toHome(callback?) {
-    director.loadScene("Home", function () {
+    this.loadProgressBar.load();
+    director.loadScene("Home", () => {
       console.log("Success to load Home scene");
       callback && callback();
     });

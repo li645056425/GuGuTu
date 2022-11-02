@@ -1,21 +1,9 @@
-import {
-  _decorator,
-  Component,
-  Node,
-  view,
-  director,
-  ProgressBar,
-  UITransform,
-  Vec3,
-  Prefab,
-} from "cc";
+import { _decorator, Component, Node, Prefab } from "cc";
 import { getRandomRainNode } from "../Utils/Common";
 const { ccclass, property } = _decorator;
 
-const visibleSize = view.getVisibleSize();
-
-@ccclass("BeforeController")
-export class BeforeController extends Component {
+@ccclass("Home")
+export class Home extends Component {
   @property({ type: Prefab })
   public rain1Prefabs: Prefab | null = null;
   @property({ type: Prefab })
@@ -30,7 +18,7 @@ export class BeforeController extends Component {
   private _rainInterval = null;
 
   start() {
-    console.log("BeforeController start");
+    console.log("Home start");
     this.initRains();
   }
 

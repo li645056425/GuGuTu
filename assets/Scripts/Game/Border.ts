@@ -2,8 +2,8 @@ import { _decorator, Component, Node, BoxCollider, ITriggerEvent } from "cc";
 import { ColliderGroup } from "../../Constants/Collider";
 const { ccclass, property } = _decorator;
 
-@ccclass("BorderController")
-export class BorderController extends Component {
+@ccclass("Border")
+export class Border extends Component {
   start() {
     const collider = this.node.getComponent(BoxCollider);
     collider.on("onTriggerEnter", this.onTriggerEnter, this);

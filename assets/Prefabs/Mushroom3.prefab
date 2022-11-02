@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "Mushroom",
+    "_name": "Mushroom3",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Mushroom",
+    "_name": "Mushroom3",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -77,8 +77,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 62.5,
-      "height": 62.5
+      "width": 56.25,
+      "height": 37.5
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -113,7 +113,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "633c9dfc-68f9-4f27-9a53-1f355727b51c@f9941",
+      "__uuid__": "0ad57deb-f02c-405c-be10-d7950e1bd172@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -159,8 +159,8 @@
     },
     "_size": {
       "__type__": "cc.Vec3",
-      "x": 62.5,
-      "y": 62.5,
+      "x": 56.25,
+      "y": 37.5,
       "z": 1
     },
     "_id": ""

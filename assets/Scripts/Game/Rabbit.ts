@@ -18,8 +18,8 @@ const { ccclass, property } = _decorator;
 
 const visibleSize = view.getVisibleSize();
 
-@ccclass("RabbitController")
-export class RabbitController extends Component {
+@ccclass("Rabbit")
+export class Rabbit extends Component {
   @property({ displayName: "路宽", type: Number, step: 1 })
   public roadWidth;
   @property({ type: Animation })
@@ -116,10 +116,10 @@ export class RabbitController extends Component {
 
   jump(step) {
     this.node.getPosition(this._targetPos);
-    if (this._targetPos.x <= -this.roadWidth && step < 0) {
+    if (this._targetPos.x <= -this.roadWidth * 2 && step < 0) {
       return;
     }
-    if (this._targetPos.x >= this.roadWidth && step > 0) {
+    if (this._targetPos.x >= this.roadWidth * 2 && step > 0) {
       return;
     }
     console.log("jumpTo", step);

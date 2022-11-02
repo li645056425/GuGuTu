@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "Grass",
+    "_name": "Mushroom4",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Grass",
+    "_name": "Mushroom4",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -77,8 +77,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 75,
-      "height": 75
+      "width": 56.25,
+      "height": 37.5
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -89,7 +89,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "22qfoVkQNGu6xVcBevrKTb"
+    "fileId": "ffsBiOQS9AqJALJMcKzzID"
   },
   {
     "__type__": "cc.Sprite",
@@ -107,13 +107,13 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 7,
-      "g": 95,
-      "b": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "7d8f9b89-4fd1-4c9f-a3ab-38ec7cded7ca@f9941",
+      "__uuid__": "aa13158d-1582-4427-88de-eb59302cc3b2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -133,7 +133,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "f5uM9yVpdANaI0OSphgFDh"
+    "fileId": "103EtgEHpJioy1t5vqYuTc"
   },
   {
     "__type__": "cc.BoxCollider",
@@ -159,15 +159,15 @@
     },
     "_size": {
       "__type__": "cc.Vec3",
-      "x": 75,
-      "y": 75,
+      "x": 56.25,
+      "y": 37.5,
       "z": 1
     },
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "4c95SZ089HdZWOSeYsasa+"
+    "fileId": "25uT60Yv9FiK1CqffrUPId"
   },
   {
     "__type__": "cc.RigidBody",
@@ -180,7 +180,7 @@
     "__prefab": {
       "__id__": 9
     },
-    "_group": 8,
+    "_group": 4,
     "_type": 4,
     "_mass": 1,
     "_allowSleep": true,
@@ -203,7 +203,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "36z6s6PLlHErcPqn8zOUM9"
+    "fileId": "95CD7EtUJAvZuI0HYJXiBS"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -213,6 +213,6 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "96/QTzRdBKvbdq/88eR5aj"
+    "fileId": "fctsL53rhJfrT37Ov4sI0/"
   }
 ]
