@@ -32,6 +32,7 @@ export class FriendRankDialog extends Component {
       env.getOpenDataContext().postMessage({
         type: "renderFriendRankList",
       });
+      this.node.setScale(new Vec3(0, 0, 1));
       this.node.active = true;
       this._animation.play("Show");
     }

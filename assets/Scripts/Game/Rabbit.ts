@@ -12,10 +12,15 @@ import {
   MeshRenderer,
   BoxCollider,
   ITriggerEvent,
+  find,
+  Node,
 } from "cc";
 import { ColliderGroup } from "../../Constants/Collider";
+import { GameOverResult } from "../../Constants/GameStatus";
+import Manager from "./Manager";
 const { ccclass, property } = _decorator;
 
+const manager = new Manager();
 const visibleSize = view.getVisibleSize();
 
 @ccclass("Rabbit")
@@ -43,7 +48,7 @@ export class Rabbit extends Component {
   private _targetPos: Vec3 = new Vec3();
 
   start() {
-    console.log("RabbitController start");
+    manager.rabbit = this;
     this.node.getPosition(this._curPos);
     this.setInputActive(true);
     this.setColliderActive(true);
@@ -109,8 +114,32 @@ export class Rabbit extends Component {
 
   onTriggerEnter(e: ITriggerEvent) {
     if (e.otherCollider.getGroup() == ColliderGroup.Mushroom) {
+      const mushroom = (<any>e.otherCollider.node).mushroom;
       // jiafen
       e.otherCollider.node.destroy();
+
+      if (mushroom.isPoison) {
+        manager.gameOver(GameOverResult.Poisoned);
+      } else {
+        manager.basketList
+          .refresh(mushroom.level)
+          .then(({ lingzhiPlus }) => {
+            if (mushroom.isLingzhi) {
+              manager.gameScore.lingzhiNum++;
+            }
+            if (lingzhiPlus) {
+              manager.gameScore.lingzhiNum++;
+            }
+            manager.gameScore.scoreNum++;
+            manager.scoreboard.refresh();
+          })
+          .catch((err) => {
+            console.error(err);
+            if (err == "Fulled") {
+              manager.gameOver(GameOverResult.Fulled);
+            }
+          });
+      }
     }
   }
 
