@@ -9,6 +9,7 @@ import { Scoreboard } from "./Scoreboard";
 let instance;
 
 export default class Manager {
+  public roadNum = 3;
   public gameScore = {
     scoreNum: 0,
     lingzhiNum: 0,

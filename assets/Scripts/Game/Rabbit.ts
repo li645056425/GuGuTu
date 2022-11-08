@@ -145,10 +145,16 @@ export class Rabbit extends Component {
 
   jump(step) {
     this.node.getPosition(this._targetPos);
-    if (this._targetPos.x <= -this.roadWidth * 2 && step < 0) {
+    if (
+      this._targetPos.x <= -this.roadWidth * ((manager.roadNum - 1) / 2) &&
+      step < 0
+    ) {
       return;
     }
-    if (this._targetPos.x >= this.roadWidth * 2 && step > 0) {
+    if (
+      this._targetPos.x >= this.roadWidth * ((manager.roadNum - 1) / 2) &&
+      step > 0
+    ) {
       return;
     }
     console.log("jumpTo", step);
