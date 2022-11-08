@@ -6,13 +6,18 @@ import {
   UITransform,
   view,
   Widget,
+  loader,
+  assetManager,
 } from "cc";
+import DataBus from "../DataBus";
 import { LoadProgressBar } from "./LoadProgressBar";
 const { ccclass, property } = _decorator;
 
 const wx = (window as any).wx;
 
 const designSize = view.getDesignResolutionSize();
+
+const dataBus = new DataBus();
 
 @ccclass("BeginButton")
 export class BeginButton extends Component {
@@ -65,8 +70,11 @@ export class BeginButton extends Component {
     this.toHome();
   }
 
-  toHome(callback?) {
+  async toHome(callback?) {
+    this.loadProgressBar.canFinish = false;
     this.loadProgressBar.load();
+    await dataBus.loadBundles();
+    this.loadProgressBar.canFinish = true;
     director.loadScene("Home", () => {
       console.log("Success to load Home scene");
       callback && callback();

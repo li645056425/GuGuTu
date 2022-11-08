@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Label, Animation, director } from "cc";
-import { GameOverResult, GameStatus } from "../../Constants/GameStatus";
+import { GameOverResult, GameStatus } from "../Constants/GameStatus";
 import { BasketList } from "./BasketList";
 import { Rabbit } from "./Rabbit";
 import { ResultDialog } from "./ResultDialog";

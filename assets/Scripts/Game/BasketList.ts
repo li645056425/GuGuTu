@@ -6,12 +6,15 @@ import {
   SpriteFrame,
   Sprite,
   UITransform,
+  assetManager,
 } from "cc";
-import { MushroomTypes } from "../../Constants/Mushroom";
+import { MushroomTypes } from "../Constants/Mushroom";
+import DataBus from "../DataBus";
 import Manager from "./Manager";
 const { ccclass, property } = _decorator;
 
 const manager = new Manager();
+const dataBus = new DataBus();
 
 @ccclass("BasketList")
 export class BasketList extends Component {
@@ -84,7 +87,7 @@ export class BasketList extends Component {
             const spriteName = MushroomTypes.find(
               (mushroom) => mushroom.level == level
             ).spriteName;
-            resources.load(
+            dataBus.resourcesBundle.load(
               `${spriteName}/spriteFrame`,
               SpriteFrame,
               (err, spriteFrame) => {
@@ -93,7 +96,7 @@ export class BasketList extends Component {
               }
             );
           } else {
-            resources.load(
+            dataBus.resourcesBundle.load(
               `basket/spriteFrame`,
               SpriteFrame,
               (err, spriteFrame) => {

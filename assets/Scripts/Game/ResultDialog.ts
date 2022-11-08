@@ -8,7 +8,7 @@ import {
   UIOpacity,
   Vec3,
 } from "cc";
-import { GameOverResult } from "../../Constants/GameStatus";
+import { GameOverResult } from "../Constants/GameStatus";
 import Manager from "./Manager";
 const { ccclass, property } = _decorator;
 

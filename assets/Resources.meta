@@ -7,9 +7,13 @@
   "subMetas": {},
   "userData": {
     "isBundle": true,
-    "bundleName": "resources",
+    "bundleName": "ResourcesDefault",
     "priority": 8,
-    "compressionType": {},
-    "isRemoteBundle": {}
+    "compressionType": {
+      "wechatgame": "subpackage"
+    },
+    "isRemoteBundle": {
+      "wechatgame": false
+    }
   }
 }

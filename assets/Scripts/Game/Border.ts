@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, BoxCollider, ITriggerEvent } from "cc";
-import { ColliderGroup } from "../../Constants/Collider";
+import { ColliderGroup } from "../Constants/Collider";
 const { ccclass, property } = _decorator;
 
 @ccclass("Border")

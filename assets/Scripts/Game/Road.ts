@@ -1,4 +1,4 @@
-import { MushroomTypes } from "./../../Constants/Mushroom";
+import { MushroomTypes } from "./../Constants/Mushroom";
 import {
   _decorator,
   Component,

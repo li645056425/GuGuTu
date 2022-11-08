@@ -7,10 +7,12 @@ import {
   SpriteFrame,
   Sprite,
 } from "cc";
+import DataBus from "../DataBus";
 import Manager from "./Manager";
 const { ccclass, property } = _decorator;
 
 const manager = new Manager();
+const dataBus = new DataBus();
 
 @ccclass("Scoreboard")
 export class Scoreboard extends Component {
@@ -35,7 +37,7 @@ export class Scoreboard extends Component {
       this._lingzhiNum.active = true;
     } else {
       if (manager.gameScore.lingzhiNum > 0) {
-        resources.load(
+        dataBus.resourcesBundle.load(
           `lingzhi/spriteFrame`,
           SpriteFrame,
           (err, spriteFrame) => {

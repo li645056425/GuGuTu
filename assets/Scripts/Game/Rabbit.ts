@@ -15,8 +15,8 @@ import {
   find,
   Node,
 } from "cc";
-import { ColliderGroup } from "../../Constants/Collider";
-import { GameOverResult } from "../../Constants/GameStatus";
+import { ColliderGroup } from "../Constants/Collider";
+import { GameOverResult } from "../Constants/GameStatus";
 import Manager from "./Manager";
 const { ccclass, property } = _decorator;
 
