@@ -2101,7 +2101,6 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "roadWidth": 125,
     "animation": {
       "__id__": 85
     },

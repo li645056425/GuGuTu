@@ -12,20 +12,16 @@ import {
 import DataBus from "../DataBus";
 import { LoadProgressBar } from "./LoadProgressBar";
 const { ccclass, property } = _decorator;
-
+const dataBus = new DataBus();
 const wx = (window as any).wx;
 
 const designSize = view.getDesignResolutionSize();
 
-const dataBus = new DataBus();
-
 @ccclass("BeginButton")
 export class BeginButton extends Component {
-  @property({ type: LoadProgressBar })
-  public loadProgressBar: LoadProgressBar = null;
-
   start() {
     if (!!wx) {
+      this.node.active = false;
       this.createUserInfoButton();
     }
   }
@@ -52,7 +48,6 @@ export class BeginButton extends Component {
         height,
       },
     });
-    this.node.active = false;
     let userInfoButtonDisable = false;
     userInfoButton.onTap((res) => {
       console.log(res);
@@ -71,13 +66,11 @@ export class BeginButton extends Component {
   }
 
   async toHome(callback?) {
-    this.loadProgressBar.canFinish = false;
-    this.loadProgressBar.load();
-    await dataBus.loadBundles();
-    this.loadProgressBar.canFinish = true;
-    director.loadScene("Home", () => {
-      console.log("Success to load Home scene");
-      callback && callback();
-    });
+    if (dataBus.resourcesBundle && dataBus.scenesBundle) {
+      director.loadScene("Home", () => {
+        console.log("Success to load Home scene");
+        callback && callback();
+      });
+    }
   }
 }

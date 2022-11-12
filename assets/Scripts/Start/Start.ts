@@ -8,14 +8,24 @@ import {
   UITransform,
   Vec3,
   Prefab,
+  sys,
+  AudioSource,
 } from "cc";
+import DataBus from "../DataBus";
 import { getRandomRainNode } from "../Utils/Common";
+import { LoadProgressBar } from "./LoadProgressBar";
 const { ccclass, property } = _decorator;
 
 const visibleSize = view.getVisibleSize();
+const dataBus = new DataBus();
 
 @ccclass("Before")
 export class Before extends Component {
+  @property({ type: Node })
+  public bgm: Node = null;
+  @property({ type: LoadProgressBar })
+  public loadProgressBar: LoadProgressBar = null;
+
   @property({ type: Prefab })
   public rain1Prefabs: Prefab | null = null;
   @property({ type: Prefab })
@@ -32,6 +42,20 @@ export class Before extends Component {
   start() {
     console.log("Before start");
     this.initRains();
+    setTimeout(() => {
+      this.loadProgressBar.canFinish = false;
+      this.loadProgressBar.load();
+      dataBus.loadBundles().then(() => {
+        this.loadProgressBar.canFinish = true;
+      });
+    }, 100);
+    director.addPersistRootNode(this.bgm);
+    dataBus.bgm = this.bgm;
+    if (sys.localStorage.getItem("bgmPaused")) {
+      this.bgm.getComponent(AudioSource).pause();
+    } else {
+      this.bgm.getComponent(AudioSource).play();
+    }
   }
 
   update(deltaTime: number) {}

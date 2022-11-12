@@ -1,8 +1,8 @@
-import { _decorator, Component, Node, director } from "cc";
-import Manager from "../Game/Manager";
+import { _decorator, Component, Node, director, sys } from "cc";
+import DataBus from "../DataBus";
 const { ccclass, property } = _decorator;
 
-const manager = new Manager();
+const dataBus = new DataBus();
 @ccclass("BeginButton")
 export class BeginButton extends Component {
   start() {}
@@ -10,9 +10,13 @@ export class BeginButton extends Component {
   update(deltaTime: number) {}
 
   onClicked() {
-    manager.roadNum = 5;
-    director.loadScene("Game-5", function () {
-      console.log("Success to load Game scene");
-    });
+    const leasonLearned = sys.localStorage.getItem("leasonLearned");
+    if (leasonLearned) {
+      dataBus.start();
+    } else {
+      director.loadScene("Leason", function () {
+        console.log("Success to load Leason scene");
+      });
+    }
   }
 }

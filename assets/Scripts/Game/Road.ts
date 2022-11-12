@@ -11,10 +11,10 @@ import {
   view,
 } from "cc";
 import { getProbablyResult, getRandomInt } from "../Utils/Common";
-import Manager from "./Manager";
+import DataBus from "../DataBus";
 const { ccclass, property } = _decorator;
 
-const manager = new Manager();
+const dataBus = new DataBus();
 const visibleSize = view.getVisibleSize();
 
 @ccclass("Road")
@@ -50,7 +50,7 @@ export class Road extends Component {
   private _mushroomRandoms = [];
 
   start() {
-    manager.roads.push(this);
+    dataBus.roads.push(this);
     this.node.removeAllChildren();
     this.node.getPosition(this._curPos);
     this._roadWidth = this.node.getComponent(UITransform).width;
@@ -58,7 +58,7 @@ export class Road extends Component {
     this._grassGroupHeight = this._grassGroupCount * this._roadWidth;
     this.initMushroomPools();
     this.initMushroomRandoms();
-    this.appendRoad();
+    this.appendRoad(false);
     this.appendRoad();
     this.appendRoad();
     // setTimeout(() => {
@@ -115,12 +115,12 @@ export class Road extends Component {
     // 30% 25% 15% 10% 5% 15%
     // 6   5   3   2   1  3
     this._mushroomRandoms = [
-      lingzhiMushroom,
-      lingzhiMushroom,
-      lingzhiMushroom,
-      lingzhiMushroom,
-      lingzhiMushroom,
-      lingzhiMushroom,
+      level1Mushroom,
+      level1Mushroom,
+      level1Mushroom,
+      level1Mushroom,
+      level1Mushroom,
+      level1Mushroom,
       level2Mushroom,
       level2Mushroom,
       level2Mushroom,
@@ -138,20 +138,25 @@ export class Road extends Component {
     ];
   }
 
-  appendRoad() {
+  appendRoad(withMushrooms = true) {
     for (let i = 0; i < this._grassGroupCount; i++) {
-      const hasMushroom = getProbablyResult(30);
       const grassNode = instantiate(this.grassPrfb);
       const grassHeight = grassNode.getComponent(UITransform).height;
       grassNode.setPosition(0, -grassHeight * (this._grassCount + 0.5), 0);
-      this.node.addChild(grassNode);
-      if (hasMushroom) {
+
+      const lastGrassNoMushroom =
+        this.node.children[this.node.children.length - 1]?.children.length == 0;
+      const needMushroom =
+        withMushrooms && lastGrassNoMushroom && getProbablyResult(50);
+      if (needMushroom) {
         const mushroom =
           this._mushroomRandoms[getRandomInt(0, this._mushroomRandoms.length)];
         const mushroomNode = instantiate(mushroom.prfb);
         mushroomNode.mushroom = mushroom;
         grassNode.addChild(mushroomNode);
       }
+
+      this.node.addChild(grassNode);
       this._grassCount++;
     }
   }

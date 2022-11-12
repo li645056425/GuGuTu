@@ -10,10 +10,8 @@ import {
 } from "cc";
 import { MushroomTypes } from "../Constants/Mushroom";
 import DataBus from "../DataBus";
-import Manager from "./Manager";
 const { ccclass, property } = _decorator;
 
-const manager = new Manager();
 const dataBus = new DataBus();
 
 @ccclass("BasketList")
@@ -31,7 +29,7 @@ export class BasketList extends Component {
     .level;
 
   start() {
-    manager.basketList = this;
+    dataBus.basketList = this;
   }
 
   update(deltaTime: number) {}

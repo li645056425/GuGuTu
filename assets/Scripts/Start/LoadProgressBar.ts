@@ -21,19 +21,17 @@ export class LoadProgressBar extends Component {
 
   update(deltaTime: number) {}
 
-  load(callback?) {
+  load(finish?) {
     this._bar.progress += 0.02;
     this._loadInterval = setInterval(() => {
-      if (this._bar.progress < 0.7) {
+      if (this._bar.progress < 1) {
         this._bar.progress += 0.02;
-      } else if (this._bar.progress < 1) {
-        if (this.canFinish) {
-          this._bar.progress += 0.02;
-        }
-      } else {
+        this._bar.progress = Math.min(1, this._bar.progress);
+      }
+      if (this.canFinish) {
         this._bar.progress = 1;
         clearInterval(this._loadInterval);
-        callback && callback();
+        finish && finish();
       }
     }, 20);
   }

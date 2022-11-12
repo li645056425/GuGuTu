@@ -8,10 +8,8 @@ import {
   Sprite,
 } from "cc";
 import DataBus from "../DataBus";
-import Manager from "./Manager";
 const { ccclass, property } = _decorator;
 
-const manager = new Manager();
 const dataBus = new DataBus();
 
 @ccclass("Scoreboard")
@@ -20,7 +18,7 @@ export class Scoreboard extends Component {
   private _lingzhiNum: Node = null;
 
   start() {
-    manager.scoreboard = this;
+    dataBus.scoreboard = this;
     this._lingzhiList = this.node.getChildByName("LingzhiList");
     this._lingzhiNum = this.node.getChildByName("LingzhiNum");
     this._lingzhiNum.active = false;
@@ -29,19 +27,19 @@ export class Scoreboard extends Component {
   update(deltaTime: number) {}
 
   refresh() {
-    if (manager.gameScore.lingzhiNum > 7) {
+    if (dataBus.gameScore.lingzhiNum > 7) {
       this._lingzhiNum
         .getChildByName("Num")
-        .getComponent(Label).string = `x ${manager.gameScore.lingzhiNum}`;
+        .getComponent(Label).string = `x ${dataBus.gameScore.lingzhiNum}`;
       this._lingzhiList.active = false;
       this._lingzhiNum.active = true;
     } else {
-      if (manager.gameScore.lingzhiNum > 0) {
+      if (dataBus.gameScore.lingzhiNum > 0) {
         dataBus.resourcesBundle.load(
           `lingzhi/spriteFrame`,
           SpriteFrame,
           (err, spriteFrame) => {
-            for (let index = 0; index < manager.gameScore.lingzhiNum; index++) {
+            for (let index = 0; index < dataBus.gameScore.lingzhiNum; index++) {
               this._lingzhiList.children[index].getComponent(
                 Sprite
               ).spriteFrame = spriteFrame;

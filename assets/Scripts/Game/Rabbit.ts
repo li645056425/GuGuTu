@@ -17,16 +17,15 @@ import {
 } from "cc";
 import { ColliderGroup } from "../Constants/Collider";
 import { GameOverResult } from "../Constants/GameStatus";
-import Manager from "./Manager";
+import DataBus from "../DataBus";
+
 const { ccclass, property } = _decorator;
 
-const manager = new Manager();
+const dataBus = new DataBus();
 const visibleSize = view.getVisibleSize();
 
 @ccclass("Rabbit")
 export class Rabbit extends Component {
-  @property({ displayName: "路宽", type: Number, step: 1 })
-  public roadWidth;
   @property({ type: Animation })
   public animation: Animation | null = null;
 
@@ -39,7 +38,7 @@ export class Rabbit extends Component {
   // 当前跳跃时间
   private _curJumpTime: number = 0;
   // 每次跳跃时长
-  private _jumpTime: number = 0.15;
+  private _jumpTime: number = 0.1;
   // 当前跳跃速度
   private _curJumpSpeed: number = 0;
   // 当前角色位置
@@ -48,7 +47,7 @@ export class Rabbit extends Component {
   private _targetPos: Vec3 = new Vec3();
 
   start() {
-    manager.rabbit = this;
+    dataBus.rabbit = this;
     this.node.getPosition(this._curPos);
     this.setInputActive(true);
     this.setColliderActive(true);
@@ -101,9 +100,9 @@ export class Rabbit extends Component {
     if (!this._startJump && this._canJump) {
       const deltaX = e.getLocationX() - this._touchStartX;
       if (deltaX > visibleSize.width / 10) {
-        this.jump(this.roadWidth);
+        this.jump(dataBus.roadWidth);
       } else if (deltaX < -visibleSize.width / 10) {
-        this.jump(-this.roadWidth);
+        this.jump(-dataBus.roadWidth);
       }
     }
   }
@@ -119,24 +118,24 @@ export class Rabbit extends Component {
       e.otherCollider.node.destroy();
 
       if (mushroom.isPoison) {
-        manager.gameOver(GameOverResult.Poisoned);
+        dataBus.gameOver(GameOverResult.Poisoned);
       } else {
-        manager.basketList
+        dataBus.basketList
           .refresh(mushroom.level)
           .then(({ lingzhiPlus }) => {
             if (mushroom.isLingzhi) {
-              manager.gameScore.lingzhiNum++;
+              dataBus.gameScore.lingzhiNum++;
             }
             if (lingzhiPlus) {
-              manager.gameScore.lingzhiNum++;
+              dataBus.gameScore.lingzhiNum++;
             }
-            manager.gameScore.scoreNum++;
-            manager.scoreboard.refresh();
+            dataBus.gameScore.scoreNum++;
+            dataBus.scoreboard.refresh();
           })
           .catch((err) => {
             console.error(err);
             if (err == "Fulled") {
-              manager.gameOver(GameOverResult.Fulled);
+              dataBus.gameOver(GameOverResult.Fulled);
             }
           });
       }
@@ -144,27 +143,24 @@ export class Rabbit extends Component {
   }
 
   jump(step) {
+    this.animation.play("Jump");
     this.node.getPosition(this._targetPos);
     if (
-      this._targetPos.x <= -this.roadWidth * ((manager.roadNum - 1) / 2) &&
+      this._targetPos.x <= -dataBus.roadWidth * ((dataBus.roadNum - 1) / 2) &&
       step < 0
     ) {
       return;
     }
     if (
-      this._targetPos.x >= this.roadWidth * ((manager.roadNum - 1) / 2) &&
+      this._targetPos.x >= dataBus.roadWidth * ((dataBus.roadNum - 1) / 2) &&
       step > 0
     ) {
       return;
     }
-    console.log("jumpTo", step);
     this._startJump = true;
     this._canJump = false;
     this._curJumpTime = 0;
     this._curJumpSpeed = step / this._jumpTime;
     this._targetPos.x += step;
-    if (this.animation) {
-      this.animation.play("Jump");
-    }
   }
 }
