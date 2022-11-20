@@ -34,7 +34,7 @@ export class Leason extends Component {
       this.showLeason();
     } else {
       sys.localStorage.setItem("leasonLearned", "1");
-      dataBus.start();
+      dataBus.startGame();
     }
   }
 }

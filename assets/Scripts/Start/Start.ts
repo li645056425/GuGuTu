@@ -13,8 +13,8 @@ import {
   AudioClip,
 } from "cc";
 import DataBus from "../DataBus";
-import { getRandomRainNode } from "../Utils/Common";
-import { LoadProgress } from "../Common/LoadProgress";
+import { getPositionInfo, getRandomRainNode } from "../Utils/Common";
+import { LoadProgress } from "./LoadProgress";
 const { ccclass, property } = _decorator;
 
 const visibleSize = view.getVisibleSize();
@@ -43,24 +43,7 @@ export class Before extends Component {
   start() {
     console.log("Before start");
     this.initRains();
-    setTimeout(() => {
-      dataBus.loadCanFinish = false;
-      this.loadProgress.load();
-      dataBus.loadBundles().then(() => {
-        dataBus.resourcesBundle.load("bgm", AudioClip, (err, audioClip) => {
-          const audioSourceComp = this.bgm.getComponent(AudioSource);
-          audioSourceComp.clip = audioClip;
-          if (sys.localStorage.getItem("bgmPaused")) {
-            audioSourceComp.pause();
-          } else {
-            audioSourceComp.play();
-          }
-          dataBus.bgmAudioSource = audioSourceComp;
-          dataBus.loadCanFinish = true;
-        });
-      });
-    }, 100);
-    director.addPersistRootNode(this.bgm);
+    this.initBgm();
   }
 
   update(deltaTime: number) {}
@@ -76,6 +59,29 @@ export class Before extends Component {
       ]);
       this.node.addChild(rainNode);
     }, 100);
+  }
+
+  initBgm() {
+    // setTimeout：等loadProgress初始化结束后再执行
+    setTimeout(() => {
+      this.loadProgress.canFinish = false;
+      this.loadProgress.load();
+      dataBus.loadBundles().then(() => {
+        dataBus.resourcesBundle.load("bgm", AudioClip, (err, audioClip) => {
+          const audioSourceComp = this.bgm.getComponent(AudioSource);
+          audioSourceComp.clip = audioClip;
+          if (sys.localStorage.getItem("bgmPaused")) {
+            audioSourceComp.pause();
+          } else {
+            audioSourceComp.play();
+          }
+          dataBus.bgmAudioSource = audioSourceComp;
+          this.loadProgress.canFinish = true;
+          dataBus.allLoaded = true;
+        });
+      });
+    }, 100);
+    director.addPersistRootNode(this.bgm);
   }
 
   onDestroy() {

@@ -20,9 +20,13 @@ let instance;
  * 单例全局状态管理器
  */
 export default class DataBus {
+  /* 环境 */
+  public wx = (window as any).wx;
+  public db = null;
+
   public resourcesBundle = null;
   public scenesBundle = null;
-  public loadCanFinish = false;
+  public allLoaded = false;
 
   public bgm = null;
   public bgmAudioSource = null;
@@ -34,6 +38,8 @@ export default class DataBus {
     lingzhiNum: 0,
     duration: 0,
   };
+  public startTime = Date.now();
+  public highestScore = 0;
   public gameStatus = GameStatus.Unstarted;
   public gameOverResult = GameOverResult.Notover;
 
@@ -54,81 +60,101 @@ export default class DataBus {
     if (instance) return instance;
 
     instance = this;
+
+    if (this.wx) {
+      /* 云开发初始化 */
+      this.wx.cloud.init({
+        env: "cloud1-2grx9roq71df4f92",
+      });
+      this.db = this.wx.cloud.database();
+      this.wx.cloud.callFunction({ name: "get_share_info" }).then((res) => {
+        this.shareInfo = res.result;
+      });
+    }
   }
 
-  reset() {
+  startGame() {
+    this.roads = [];
     this.gameScore = {
       scoreNum: 0,
       lingzhiNum: 0,
       duration: 0,
     };
-    this.gameStatus = GameStatus.Unstarted;
-    this.gameOverResult = GameOverResult.Notover;
     this.relifeTime = 1;
-    this.rabbit = null;
-    this.basketList = null;
-    this.scoreboard = null;
-    this.roads = [];
-    this.resultDialog = null;
-  }
-
-  start() {
     this.roadWidth = 75;
     this.roadNum = 5;
     director.loadScene("Game-5", () => {
       console.log("Success to load Game scene");
       this.gameStatus = GameStatus.Playing;
+      this.startTime = Date.now();
     });
   }
 
-  learn() {
+  learnLeason() {
     director.loadScene("Leason", () => {
       console.log("Success to load Leason scene");
       this.gameStatus = GameStatus.Learning;
     });
   }
 
-  pause() {
+  pauseGame() {
     console.log("pause");
+    this.gameScore.duration += Date.now() - this.startTime;
     this.gameStatus = GameStatus.Paused;
+    this.pauseGameSprites();
+  }
+
+  pauseGameSprites() {
     this.rabbit.setInputActive(false);
     this.roads.forEach((road) => {
       road.paused = true;
     });
   }
 
-  continue() {
+  continueGame() {
     console.log("continue");
     this.gameStatus = GameStatus.Playing;
+    this.continueGameSprites();
+    this.startTime = Date.now();
+  }
+
+  continueGameSprites() {
     this.rabbit.setInputActive(true);
     this.roads.forEach((road) => {
       road.paused = false;
     });
   }
 
-  gameOver(result: GameOverResult) {
-    console.log("gameOver", result);
-    this.pause();
+  overGame(result: GameOverResult) {
+    console.log("over", result);
+    this.pauseGameSprites();
+    this.gameScore.duration += Date.now() - this.startTime;
     this.gameStatus = GameStatus.Over;
     this.gameOverResult = result;
     this.resultDialog.show();
+    this.wx?.cloud.callFunction({
+      name: "add_score",
+      data: this.gameScore,
+    });
   }
-  restart() {
-    this.reset();
+
+  backHome() {
     director.loadScene("Home", () => {
       console.log("Success to load Home scene");
       this.gameStatus = GameStatus.Unstarted;
+      this.gameOverResult = GameOverResult.Notover;
     });
   }
 
   /* 复活，保留灵芝数，清空篮子 */
-  relife() {
+  relifeGame() {
     console.log("relife");
     this.basketList.reset();
     this.gameStatus = GameStatus.Playing;
     this.gameOverResult = GameOverResult.Notover;
     this.resultDialog.hide();
-    this.continue();
+    this.continueGameSprites();
+    this.startTime = Date.now();
   }
 
   loadBundles() {

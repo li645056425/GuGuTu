@@ -118,7 +118,7 @@ export class Rabbit extends Component {
       e.otherCollider.node.destroy();
 
       if (mushroom.isPoison) {
-        dataBus.gameOver(GameOverResult.Poisoned);
+        dataBus.overGame(GameOverResult.Poisoned);
       } else {
         dataBus.basketList
           .refresh(mushroom.level)
@@ -135,7 +135,7 @@ export class Rabbit extends Component {
           .catch((err) => {
             console.error(err);
             if (err == "Fulled") {
-              dataBus.gameOver(GameOverResult.Fulled);
+              dataBus.overGame(GameOverResult.Fulled);
             }
           });
       }

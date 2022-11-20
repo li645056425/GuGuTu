@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function getStyle() {
   const sharedCanvas = wx.getSharedCanvas();
   const canvasWidth = sharedCanvas.width;
   const canvasHeight = sharedCanvas.height;

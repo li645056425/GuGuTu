@@ -5,13 +5,12 @@ import {
   ProgressBar,
   ProgressBarComponent,
 } from "cc";
-import DataBus from "../DataBus";
 const { ccclass, property } = _decorator;
-
-const dataBus = new DataBus();
 
 @ccclass("LoadProgress")
 export class LoadProgress extends Component {
+  public canFinish = false;
+
   private _bar = null;
 
   private _loadInterval = null;
@@ -26,13 +25,14 @@ export class LoadProgress extends Component {
   update(deltaTime: number) {}
 
   load(finish?) {
+    this._bar.progress = 0;
     this._bar.progress += 0.02;
     this._loadInterval = setInterval(() => {
       if (this._bar.progress < 1) {
         this._bar.progress += 0.02;
         this._bar.progress = Math.min(1, this._bar.progress);
       }
-      if (dataBus.loadCanFinish) {
+      if (this.canFinish) {
         this._bar.progress = 1;
         clearInterval(this._loadInterval);
         finish && finish();

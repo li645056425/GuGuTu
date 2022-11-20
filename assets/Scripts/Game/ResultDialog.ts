@@ -63,7 +63,9 @@ export class ResultDialog extends Component {
   refreshDuration() {
     this.node
       .getChildByPath("Content/Duration/Num")
-      .getComponent(Label).string = `${dataBus.gameScore.duration / 1000} s`;
+      .getComponent(Label).string = `${Math.round(
+      dataBus.gameScore.duration / 1000
+    )} s`;
   }
 
   refreshRelifeButton() {
@@ -77,7 +79,7 @@ export class ResultDialog extends Component {
   }
 
   restartClicked() {
-    dataBus.restart();
+    dataBus.backHome();
   }
 
   relifeClicked() {
@@ -101,14 +103,14 @@ export class ResultDialog extends Component {
             duration: 3000,
           });
           setTimeout(() => {
-            dataBus.relife();
+            dataBus.relifeGame();
           }, 3000);
         };
         wx.onShow(shareFinished);
       } else {
         dataBus.relifeTime--;
         this.refreshRelifeButton();
-        dataBus.relife();
+        dataBus.relifeGame();
       }
     }
   }

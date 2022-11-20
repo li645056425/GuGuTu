@@ -6,7 +6,7 @@ const visibleSize = view.getVisibleSize();
 @ccclass("RotateMushroom")
 export class RotateMushroom extends Component {
   private _loopTime = 0;
-  private _rotateCenterPos = new Vec3(0, 0, 0);
+  private _rotateCenterPos = new Vec3(0, 60, 0);
   private _rotateMushroomPos = new Vec3();
 
   start() {

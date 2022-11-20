@@ -10,16 +10,18 @@ import {
   assetManager,
 } from "cc";
 import DataBus from "../DataBus";
+import { getPositionInfo } from "../Utils/Common";
 const { ccclass, property } = _decorator;
 const dataBus = new DataBus();
-const wx = (window as any).wx;
 
 const designSize = view.getDesignResolutionSize();
 
 @ccclass("BeginButton")
 export class BeginButton extends Component {
+  private _buttonClicked = false;
+
   start() {
-    if (!!wx) {
+    if (!!dataBus.wx) {
       this.node.active = false;
       this.createUserInfoButton();
     }
@@ -36,7 +38,7 @@ export class BeginButton extends Component {
     const top = window.innerHeight * widget.top;
     const width = window.innerWidth * (1 - widget.left - widget.right);
     const height = width * (transform.height / transform.width);
-    const userInfoButton = wx.createUserInfoButton({
+    const userInfoButton = dataBus.wx.createUserInfoButton({
       type: "image",
       image:
         "https://636c-cloud1-2grx9roq71df4f92-1314029866.tcb.qcloud.la/hssbgg/begin.png?sign=4b1a191b062e6914aa7f402a01b09306&t=1667011522",
@@ -47,29 +49,46 @@ export class BeginButton extends Component {
         height,
       },
     });
-    let userInfoButtonDisable = false;
     userInfoButton.onTap((res) => {
       console.log(res);
-      if (userInfoButtonDisable) {
+      if (!dataBus.allLoaded) {
         return;
       }
-      userInfoButtonDisable = true;
-      this.toHome(() => {
+      if (this._buttonClicked) {
+        return;
+      }
+      this._buttonClicked = true;
+      /* 更新用户信息 */
+      getPositionInfo().then((positionInfo) => {
+        res.userInfo.positionInfo = positionInfo;
+        dataBus.wx?.cloud.callFunction({
+          name: "update_user_info",
+          data: res.userInfo,
+        });
+      });
+      this.toHome().then(() => {
         userInfoButton.destroy();
       });
     });
   }
 
   onClicked() {
+    if (!dataBus.allLoaded) {
+      return;
+    }
+    if (this._buttonClicked) {
+      return;
+    }
+    this._buttonClicked = true;
     this.toHome();
   }
 
-  async toHome(callback?) {
-    if (dataBus.loadCanFinish) {
+  toHome() {
+    return new Promise((resolve) => {
       director.loadScene("Home", () => {
         console.log("Success to load Home scene");
-        callback && callback();
+        resolve("success");
       });
-    }
+    });
   }
 }

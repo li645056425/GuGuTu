@@ -6,7 +6,7 @@ const visibleSize = view.getVisibleSize();
 @ccclass("RotateLingzhi")
 export class RotateLingzhi extends Component {
   private _loopTime = 0;
-  private _rotateCenterPos = new Vec3(0, 0, 0);
+  private _rotateCenterPos = new Vec3(0, 60, 0);
   private _rotateLingzhiPos = new Vec3();
 
   start() {

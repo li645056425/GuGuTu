@@ -1,6 +1,8 @@
-import { Animation, instantiate, Node, UIOpacity, Vec3, view } from "cc";
+import { Animation, instantiate, Node, sys, UIOpacity, Vec3, view } from "cc";
+import DataBus from "../DataBus";
 
 const visibleSize = view.getVisibleSize();
+const dataBus = new DataBus();
 
 /* [min, max)区间随机值 */
 export function getRandomInt(min, max) {
@@ -81,4 +83,25 @@ export function hideDialog(dialog: Node) {
       });
     }
   }
+}
+
+/* 获取用户位置 */
+export function getPositionInfo() {
+  return new Promise((resolve, reject) => {
+    const storage = sys.localStorage.getItem("positionInfo");
+    if (storage) {
+      resolve(storage);
+      return;
+    }
+    dataBus.wx?.request({
+      url: `https://apis.map.qq.com/ws/location/v1/ip?key=CV7BZ-NGY6F-ZJXJF-NTIPP-RMKMH-UOBEZ`,
+      success: (res) => {
+        sys.localStorage.setItem("positionInfo", res.data.result);
+        resolve(res.data.result);
+      },
+      fail: (err) => {
+        reject(err);
+      },
+    });
+  });
 }

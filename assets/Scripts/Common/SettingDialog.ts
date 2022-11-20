@@ -30,7 +30,7 @@ export class SettingDialog extends Component {
   }
   hide() {
     if (dataBus.gameStatus == GameStatus.Paused) {
-      dataBus.continue();
+      dataBus.continueGame();
     }
     hideDialog(this.node);
   }
@@ -46,6 +46,12 @@ export class SettingDialog extends Component {
   }
   onFinishClicked() {
     hideDialog(this.node);
-    dataBus.gameOver(GameOverResult.Failed);
+    dataBus.startTime = Date.now();
+    dataBus.overGame(GameOverResult.Failed);
+  }
+  onFeedBackClicked() {
+    dataBus.wx?.navigateToMiniProgram({
+      shortLink: "#小程序://微博/63aeK8xl6ODQ0kJ",
+    });
   }
 }

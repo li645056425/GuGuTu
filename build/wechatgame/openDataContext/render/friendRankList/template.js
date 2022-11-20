@@ -28,7 +28,7 @@ function getDataTemplate() {
           .sort((item1, item2) => {
             return item2.scoreWeight - item1.scoreWeight;
           });
-        const list = [...rankList, ...rankList]
+        const list = rankList
           .map(
             (rankItem, index) =>
               `
@@ -46,13 +46,13 @@ function getDataTemplate() {
                   }"></text>
                 </view>
                 <view class="listItemLingzhi">
-                  <image class="listItemLingzhiImg" src="openDataContext/renderFriendRankList/lingzhi.png"></image>
+                  <image class="listItemLingzhiImg" src="openDataContext/render/friendRankList/lingzhi.png"></image>
                   <text class="listItemLingzhiNum" value="${
                     rankItem.lingzhiNum
                   }"></text>
                 </view>
                 <view class="listItemScore">
-                  <image class="listItemScoreImg" src="openDataContext/renderFriendRankList/mushroom.png"></image>
+                  <image class="listItemScoreImg" src="openDataContext/render/friendRankList/mushroom.png"></image>
                   <text class="listItemScoreNum" value="${
                     rankItem.scoreNum
                   }"></text>

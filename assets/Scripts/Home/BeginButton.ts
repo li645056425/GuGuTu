@@ -13,9 +13,9 @@ export class BeginButton extends Component {
   onClicked() {
     const leasonLearned = sys.localStorage.getItem("leasonLearned");
     if (leasonLearned) {
-      dataBus.start();
+      dataBus.startGame();
     } else {
-      dataBus.learn();
+      dataBus.learnLeason();
     }
   }
 }

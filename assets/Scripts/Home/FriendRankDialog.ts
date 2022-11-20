@@ -11,10 +11,11 @@ import {
   view,
   Vec3,
 } from "cc";
+import DataBus from "../DataBus";
 import { hideDialog, showDialog } from "../Utils/Common";
 const { ccclass, property } = _decorator;
 
-const env = window.wx || window.tt || window.swan;
+const dataBus = new DataBus();
 
 @ccclass("FriendRankDialog")
 export class FriendRankDialog extends Component {
@@ -25,13 +26,11 @@ export class FriendRankDialog extends Component {
   update(deltaTime: number) {}
 
   show() {
-    if (env) {
-      console.log("postMessage renderFriendRankList");
-      env.getOpenDataContext().postMessage({
-        type: "renderFriendRankList",
-      });
-      showDialog(this.node);
-    }
+    console.log("postMessage renderFriendRankList");
+    dataBus.wx?.getOpenDataContext().postMessage({
+      type: "renderFriendRankList",
+    });
+    showDialog(this.node);
   }
 
   hide() {

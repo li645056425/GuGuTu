@@ -17,7 +17,7 @@ export class SettingButton extends Component {
 
   onClicked() {
     if (dataBus.gameStatus == GameStatus.Playing) {
-      dataBus.pause();
+      dataBus.pauseGame();
     }
     this.settingDialog?.show();
   }
