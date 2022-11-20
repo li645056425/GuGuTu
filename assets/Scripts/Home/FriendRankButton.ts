@@ -12,6 +12,6 @@ export class FriendRankButton extends Component {
   update(deltaTime: number) {}
 
   onClicked() {
-    this.friendRankDialog.showDialog();
+    this.friendRankDialog.show();
   }
 }

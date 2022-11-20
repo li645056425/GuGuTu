@@ -10,6 +10,7 @@ import {
 } from "cc";
 import { GameOverResult } from "../Constants/GameStatus";
 import DataBus from "../DataBus";
+import { hideDialog, showDialog } from "../Utils/Common";
 
 const { ccclass, property } = _decorator;
 
@@ -31,48 +32,47 @@ export class ResultDialog extends Component {
     this.refreshLingzhi();
     this.refreshDuration();
     this.refreshRelifeButton();
-    this.node.setScale(new Vec3(0, 0, 1));
-    this.node.active = true;
-    this.node.getComponent(Animation)?.play("Show");
+    showDialog(this.node);
   }
 
   hide() {
-    this.node.getComponent(Animation)?.play("Hide");
-    this.node.getComponent(Animation)?.once("stop", () => {
-      this.node.active = false;
-    });
+    hideDialog(this.node);
   }
 
   refreshTitle() {
-    this.node.getChildByPath("Title").getComponent(Label).string =
+    this.node.getChildByPath("Content/Title").getComponent(Label).string =
       dataBus.gameOverResult == GameOverResult.Poisoned
         ? "兔兔被毒了！"
-        : "兔兔吃撑了！";
+        : dataBus.gameOverResult == GameOverResult.Fulled
+        ? "兔兔吃撑了！"
+        : "兔兔失败了！";
   }
 
   refreshScore() {
     this.node
-      .getChildByPath("Score/Num")
-      .getComponent(Label).string = `${dataBus.gameScore.scoreNum}`;
+      .getChildByPath("Content/Score/Num")
+      .getComponent(Label).string = `x ${dataBus.gameScore.scoreNum}`;
   }
 
   refreshLingzhi() {
     this.node
-      .getChildByPath("Lingzhi/Num")
-      .getComponent(Label).string = `${dataBus.gameScore.lingzhiNum}`;
+      .getChildByPath("Content/Lingzhi/Num")
+      .getComponent(Label).string = `x ${dataBus.gameScore.lingzhiNum}`;
   }
 
   refreshDuration() {
-    this.node.getChildByPath("Duration/Num").getComponent(Label).string = `${
-      dataBus.gameScore.duration / 1000
-    }`;
+    this.node
+      .getChildByPath("Content/Duration/Num")
+      .getComponent(Label).string = `${dataBus.gameScore.duration / 1000} s`;
   }
 
   refreshRelifeButton() {
     this.node
-      .getChildByPath("RelifetButton/Label")
+      .getChildByPath("Content/RelifetButton/Label")
       .getComponent(Label).string = `复活 x ${dataBus.relifeTime}`;
-    this.node.getChildByPath("RelifetButton").getComponent(UIOpacity).opacity =
+    this.node
+      .getChildByPath("Content/RelifetButton")
+      .getComponent(UIOpacity).opacity =
       255 * (dataBus.relifeTime <= 0 ? 0.5 : 1);
   }
 

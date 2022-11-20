@@ -5,17 +5,21 @@ import {
   ProgressBar,
   ProgressBarComponent,
 } from "cc";
+import DataBus from "../DataBus";
 const { ccclass, property } = _decorator;
 
-@ccclass("LoadProgressBar")
-export class LoadProgressBar extends Component {
+const dataBus = new DataBus();
+
+@ccclass("LoadProgress")
+export class LoadProgress extends Component {
   private _bar = null;
 
-  public canFinish = true;
   private _loadInterval = null;
 
   start() {
-    this._bar = this.node.getComponent(ProgressBar);
+    this._bar = this.node
+      .getChildByName("ProgressBar")
+      .getComponent(ProgressBar);
     this._bar.progress = 0;
   }
 
@@ -28,7 +32,7 @@ export class LoadProgressBar extends Component {
         this._bar.progress += 0.02;
         this._bar.progress = Math.min(1, this._bar.progress);
       }
-      if (this.canFinish) {
+      if (dataBus.loadCanFinish) {
         this._bar.progress = 1;
         clearInterval(this._loadInterval);
         finish && finish();

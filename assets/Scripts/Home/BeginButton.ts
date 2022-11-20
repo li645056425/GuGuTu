@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, director, sys } from "cc";
+import { GameStatus } from "../Constants/GameStatus";
 import DataBus from "../DataBus";
 const { ccclass, property } = _decorator;
 
@@ -14,9 +15,7 @@ export class BeginButton extends Component {
     if (leasonLearned) {
       dataBus.start();
     } else {
-      director.loadScene("Leason", function () {
-        console.log("Success to load Leason scene");
-      });
+      dataBus.learn();
     }
   }
 }

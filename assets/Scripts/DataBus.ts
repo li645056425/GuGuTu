@@ -22,8 +22,10 @@ let instance;
 export default class DataBus {
   public resourcesBundle = null;
   public scenesBundle = null;
+  public loadCanFinish = false;
 
-  public bgm = null
+  public bgm = null;
+  public bgmAudioSource = null;
 
   public roadWidth = 125;
   public roadNum = 3;
@@ -32,7 +34,7 @@ export default class DataBus {
     lingzhiNum: 0,
     duration: 0,
   };
-  public gameStatus = GameStatus.Playing;
+  public gameStatus = GameStatus.Unstarted;
   public gameOverResult = GameOverResult.Notover;
 
   public relifeTime = 1;
@@ -60,7 +62,7 @@ export default class DataBus {
       lingzhiNum: 0,
       duration: 0,
     };
-    this.gameStatus = GameStatus.Playing;
+    this.gameStatus = GameStatus.Unstarted;
     this.gameOverResult = GameOverResult.Notover;
     this.relifeTime = 1;
     this.rabbit = null;
@@ -73,13 +75,22 @@ export default class DataBus {
   start() {
     this.roadWidth = 75;
     this.roadNum = 5;
-    director.loadScene("Game-5", function () {
+    director.loadScene("Game-5", () => {
       console.log("Success to load Game scene");
+      this.gameStatus = GameStatus.Playing;
+    });
+  }
+
+  learn() {
+    director.loadScene("Leason", () => {
+      console.log("Success to load Leason scene");
+      this.gameStatus = GameStatus.Learning;
     });
   }
 
   pause() {
     console.log("pause");
+    this.gameStatus = GameStatus.Paused;
     this.rabbit.setInputActive(false);
     this.roads.forEach((road) => {
       road.paused = true;
@@ -88,6 +99,7 @@ export default class DataBus {
 
   continue() {
     console.log("continue");
+    this.gameStatus = GameStatus.Playing;
     this.rabbit.setInputActive(true);
     this.roads.forEach((road) => {
       road.paused = false;
@@ -96,15 +108,16 @@ export default class DataBus {
 
   gameOver(result: GameOverResult) {
     console.log("gameOver", result);
+    this.pause();
     this.gameStatus = GameStatus.Over;
     this.gameOverResult = result;
     this.resultDialog.show();
-    this.pause();
   }
   restart() {
     this.reset();
-    director.loadScene("Home", function () {
+    director.loadScene("Home", () => {
       console.log("Success to load Home scene");
+      this.gameStatus = GameStatus.Unstarted;
     });
   }
 

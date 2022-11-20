@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "Grass",
+    "_name": "Grass1",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Grass",
+    "_name": "Grass1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -77,8 +77,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 125,
-      "height": 125
+      "width": 75,
+      "height": 75
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -159,8 +159,8 @@
     },
     "_size": {
       "__type__": "cc.Vec3",
-      "x": 125,
-      "y": 125,
+      "x": 75,
+      "y": 75,
       "z": 1
     },
     "_id": ""

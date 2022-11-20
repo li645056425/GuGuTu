@@ -5,13 +5,13 @@
         "_value": true
       },
       "graphcis": {
-        "_value": true
+        "_value": false
       },
       "gfx-webgl": {
         "_value": true
       },
       "gfx-webgl2": {
-        "_value": true
+        "_value": false
       },
       "animation": {
         "_value": true
@@ -51,7 +51,7 @@
         "_value": false
       },
       "physics-2d": {
-        "_value": true,
+        "_value": false,
         "_option": "physics-2d-box2d"
       },
       "physics-2d-box2d": {
@@ -61,7 +61,7 @@
         "_value": false
       },
       "intersection-2d": {
-        "_value": true
+        "_value": false
       },
       "primitive": {
         "_value": false
@@ -119,9 +119,6 @@
       "audio",
       "base",
       "gfx-webgl",
-      "gfx-webgl2",
-      "intersection-2d",
-      "physics-2d-box2d",
       "physics-ammo",
       "profiler",
       "ui"

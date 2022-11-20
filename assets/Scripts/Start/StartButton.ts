@@ -10,7 +10,6 @@ import {
   assetManager,
 } from "cc";
 import DataBus from "../DataBus";
-import { LoadProgressBar } from "./LoadProgressBar";
 const { ccclass, property } = _decorator;
 const dataBus = new DataBus();
 const wx = (window as any).wx;
@@ -66,7 +65,7 @@ export class BeginButton extends Component {
   }
 
   async toHome(callback?) {
-    if (dataBus.resourcesBundle && dataBus.scenesBundle) {
+    if (dataBus.loadCanFinish) {
       director.loadScene("Home", () => {
         console.log("Success to load Home scene");
         callback && callback();

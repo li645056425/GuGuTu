@@ -10,10 +10,11 @@ import {
   Prefab,
   sys,
   AudioSource,
+  AudioClip,
 } from "cc";
 import DataBus from "../DataBus";
 import { getRandomRainNode } from "../Utils/Common";
-import { LoadProgressBar } from "./LoadProgressBar";
+import { LoadProgress } from "../Common/LoadProgress";
 const { ccclass, property } = _decorator;
 
 const visibleSize = view.getVisibleSize();
@@ -23,8 +24,8 @@ const dataBus = new DataBus();
 export class Before extends Component {
   @property({ type: Node })
   public bgm: Node = null;
-  @property({ type: LoadProgressBar })
-  public loadProgressBar: LoadProgressBar = null;
+  @property({ type: LoadProgress })
+  public loadProgress: LoadProgress = null;
 
   @property({ type: Prefab })
   public rain1Prefabs: Prefab | null = null;
@@ -43,19 +44,23 @@ export class Before extends Component {
     console.log("Before start");
     this.initRains();
     setTimeout(() => {
-      this.loadProgressBar.canFinish = false;
-      this.loadProgressBar.load();
+      dataBus.loadCanFinish = false;
+      this.loadProgress.load();
       dataBus.loadBundles().then(() => {
-        this.loadProgressBar.canFinish = true;
+        dataBus.resourcesBundle.load("bgm", AudioClip, (err, audioClip) => {
+          const audioSourceComp = this.bgm.getComponent(AudioSource);
+          audioSourceComp.clip = audioClip;
+          if (sys.localStorage.getItem("bgmPaused")) {
+            audioSourceComp.pause();
+          } else {
+            audioSourceComp.play();
+          }
+          dataBus.bgmAudioSource = audioSourceComp;
+          dataBus.loadCanFinish = true;
+        });
       });
     }, 100);
     director.addPersistRootNode(this.bgm);
-    dataBus.bgm = this.bgm;
-    if (sys.localStorage.getItem("bgmPaused")) {
-      this.bgm.getComponent(AudioSource).pause();
-    } else {
-      this.bgm.getComponent(AudioSource).play();
-    }
   }
 
   update(deltaTime: number) {}

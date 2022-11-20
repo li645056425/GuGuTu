@@ -10,5 +10,6 @@ export enum GameOverResult {
   Notover,
   Fulled,
   Poisoned,
+  Failed,
   Success,
 }

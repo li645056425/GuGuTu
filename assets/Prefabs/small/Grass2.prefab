@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "Grass",
+    "_name": "Grass2",
     "_objFlags": 0,
     "_native": "",
     "data": {
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Grass",
+    "_name": "Grass2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -107,13 +107,13 @@
     "_dstBlendFactor": 4,
     "_color": {
       "__type__": "cc.Color",
-      "r": 7,
-      "g": 95,
-      "b": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "7d8f9b89-4fd1-4c9f-a3ab-38ec7cded7ca@f9941",
+      "__uuid__": "bd929244-de51-4b0b-a985-8cc33aee11fd@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,

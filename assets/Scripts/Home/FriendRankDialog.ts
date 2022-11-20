@@ -11,37 +11,34 @@ import {
   view,
   Vec3,
 } from "cc";
+import { hideDialog, showDialog } from "../Utils/Common";
 const { ccclass, property } = _decorator;
 
 const env = window.wx || window.tt || window.swan;
 
 @ccclass("FriendRankDialog")
 export class FriendRankDialog extends Component {
-  private _animation: Animation = null;
-
   start() {
     this.node.active = false;
-    this._animation = this.node.getComponent(Animation);
   }
 
   update(deltaTime: number) {}
 
-  showDialog() {
+  show() {
     if (env) {
       console.log("postMessage renderFriendRankList");
       env.getOpenDataContext().postMessage({
         type: "renderFriendRankList",
       });
-      this.node.setScale(new Vec3(0, 0, 1));
-      this.node.active = true;
-      this._animation.play("Show");
+      showDialog(this.node);
     }
   }
 
-  hideDialog() {
-    this._animation.play("Hide");
-    this._animation.once("stop", () => {
-      this.node.active = false;
-    });
+  hide() {
+    hideDialog(this.node);
+  }
+
+  onCloseClicked() {
+    this.hide();
   }
 }
