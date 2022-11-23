@@ -69,6 +69,9 @@ export default class DataBus {
       this.db = this.wx.cloud.database();
       this.wx.cloud.callFunction({ name: "get_share_info" }).then((res) => {
         this.shareInfo = res.result;
+        this.wx.onShareAppMessage(() => {
+          return this.shareInfo;
+        });
       });
     }
   }
