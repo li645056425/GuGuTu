@@ -1,5 +1,6 @@
 const Layout = require("./engine").default;
 const renderFriendRankList = require("./render/friendRankList/index");
+const { updateHighestScore, setHighestScore } = require("./util");
 
 let __env = GameGlobal.wx || GameGlobal.tt || GameGlobal.swan;
 
@@ -18,6 +19,13 @@ __env.onMessage((data) => {
       height: data.height,
     });
   } else if (data.type === "renderFriendRankList") {
+    /* 渲染好友圈排行榜数据 */
     renderFriendRankList();
+  } else if (data.type === "updateHighestScore") {
+    /* 更新设置用户托管最高分 */
+    updateHighestScore(data.score);
+  } else if (data.type === "setHighestScore") {
+    /* 直接设置用户托管最高分 */
+    setHighestScore(data.score);
   }
 });

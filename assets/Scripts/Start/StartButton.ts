@@ -10,7 +10,6 @@ import {
   assetManager,
 } from "cc";
 import DataBus from "../DataBus";
-import { getPositionInfo } from "../Utils/Common";
 const { ccclass, property } = _decorator;
 const dataBus = new DataBus();
 
@@ -59,13 +58,9 @@ export class BeginButton extends Component {
       }
       this._buttonClicked = true;
       /* 更新用户信息 */
-      getPositionInfo().then((positionInfo) => {
-        res.userInfo.positionInfo = positionInfo;
-        dataBus.wx?.cloud.callFunction({
-          name: "update_user_info",
-          data: res.userInfo,
-        });
-      });
+      // getPositionInfo().then((positionInfo) => {
+      //   console.log(positionInfo);
+      // });
       this.toHome().then(() => {
         userInfoButton.destroy();
       });

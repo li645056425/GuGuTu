@@ -62,16 +62,12 @@ export default class DataBus {
     instance = this;
 
     if (this.wx) {
-      /* 云开发初始化 */
-      this.wx.cloud.init({
-        env: "cloud1-2grx9roq71df4f92",
-      });
-      this.db = this.wx.cloud.database();
-      this.wx.cloud.callFunction({ name: "get_share_info" }).then((res) => {
-        this.shareInfo = res.result;
-        this.wx.onShareAppMessage(() => {
-          return this.shareInfo;
-        });
+      this.shareInfo = {
+        title: "红伞伞白杆杆，不要让小兔子躺板板~",
+        imageUrl: "images/share.png",
+      };
+      this.wx.onShareAppMessage(() => {
+        return this.shareInfo;
       });
     }
   }
@@ -135,9 +131,9 @@ export default class DataBus {
     this.gameStatus = GameStatus.Over;
     this.gameOverResult = result;
     this.resultDialog.show();
-    this.wx?.cloud.callFunction({
-      name: "add_score",
-      data: this.gameScore,
+    this.wx?.getOpenDataContext().postMessage({
+      type: "updateHighestScore",
+      score: this.gameScore,
     });
   }
 

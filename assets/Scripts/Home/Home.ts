@@ -22,34 +22,6 @@ export class Home extends Component {
   start() {
     console.log("Home start");
     this.initRains();
-
-    dataBus.wx?.cloud
-      .callFunction({ name: "get_my_highest_score_simple" })
-      .then((res) => {
-        const myHighestScore = res.result;
-        if (myHighestScore) {
-          const {
-            createTime = Date.now(),
-            duration = 0,
-            scoreNum = 0,
-            lingzhiNum = 0,
-          } = myHighestScore;
-          dataBus.wx.setUserCloudStorage({
-            KVDataList: [
-              {
-                key: "highestScore",
-                value: `${createTime}_${duration}_${scoreNum}_${lingzhiNum}`,
-              },
-            ],
-            success: (res) => {
-              console.log(res);
-            },
-            fail: (err) => {
-              console.error(err);
-            },
-          });
-        }
-      });
   }
 
   update(deltaTime: number) {}

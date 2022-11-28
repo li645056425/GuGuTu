@@ -13,7 +13,7 @@ import {
   AudioClip,
 } from "cc";
 import DataBus from "../DataBus";
-import { getPositionInfo, getRandomRainNode } from "../Utils/Common";
+import { getRandomRainNode } from "../Utils/Common";
 import { LoadProgress } from "./LoadProgress";
 const { ccclass, property } = _decorator;
 
