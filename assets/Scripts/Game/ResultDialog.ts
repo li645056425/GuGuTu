@@ -89,7 +89,7 @@ export class ResultDialog extends Component {
           title: "分享中...",
         });
         wx.shareAppMessage({
-          ...dataBus.shareInfo,
+          ...dataBus.configData?.shareInfo,
         });
         const shareFinished = () => {
           console.log("shareFinished");

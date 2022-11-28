@@ -29,42 +29,43 @@ export class BeginButton extends Component {
   update(deltaTime: number) {}
 
   createUserInfoButton() {
-    const widget = this.node.getComponent(Widget);
-    const transform = this.node.getComponent(UITransform);
-    console.log(widget.left, widget.right, widget.top, widget.bottom);
-    console.log(transform.width, transform.height);
-    const left = window.innerWidth * widget.left; // 百分比widget
-    const top = window.innerHeight * widget.top;
-    const width = window.innerWidth * (1 - widget.left - widget.right);
-    const height = width * (transform.height / transform.width);
-    const userInfoButton = dataBus.wx.createUserInfoButton({
-      type: "image",
-      image:
-        "https://hzwimspic-1251601690.image.myqcloud.com/10dd9680-6eca-11ed-a84b-e3e5956aeb91_size_298x128",
-      style: {
-        left,
-        top,
-        width,
-        height,
-      },
-    });
-    userInfoButton.onTap((res) => {
-      console.log(res);
-      if (!dataBus.allLoaded) {
-        return;
+    let interval = setInterval(() => {
+      if (dataBus.allLoaded && dataBus.configData) {
+        clearInterval(interval);
+        const widget = this.node.getComponent(Widget);
+        const transform = this.node.getComponent(UITransform);
+        console.log(widget.left, widget.right, widget.top, widget.bottom);
+        console.log(transform.width, transform.height);
+        const left = window.innerWidth * widget.left; // 百分比widget
+        const top = window.innerHeight * widget.top;
+        const width = window.innerWidth * (1 - widget.left - widget.right);
+        const height = width * (transform.height / transform.width);
+        const userInfoButton = dataBus.wx.createUserInfoButton({
+          type: "image",
+          image: dataBus.configData?.startButton.imgUrl,
+          style: {
+            left,
+            top,
+            width,
+            height,
+          },
+        });
+        userInfoButton.onTap((res) => {
+          console.log(res);
+          if (this._buttonClicked) {
+            return;
+          }
+          this._buttonClicked = true;
+          /* 更新用户信息 */
+          // getPositionInfo().then((positionInfo) => {
+          //   console.log(positionInfo);
+          // });
+          this.toHome().then(() => {
+            userInfoButton.destroy();
+          });
+        });
       }
-      if (this._buttonClicked) {
-        return;
-      }
-      this._buttonClicked = true;
-      /* 更新用户信息 */
-      // getPositionInfo().then((positionInfo) => {
-      //   console.log(positionInfo);
-      // });
-      this.toHome().then(() => {
-        userInfoButton.destroy();
-      });
-    });
+    }, 100);
   }
 
   onClicked() {

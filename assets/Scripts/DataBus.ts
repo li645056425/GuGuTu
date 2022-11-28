@@ -51,10 +51,7 @@ export default class DataBus {
   public roads: Road[] = [];
   public resultDialog: ResultDialog = null;
 
-  public shareInfo = {
-    title: "",
-    imageUrl: "",
-  };
+  public configData = null;
 
   constructor() {
     if (instance) return instance;
@@ -63,11 +60,20 @@ export default class DataBus {
 
     if (this.wx) {
       this.wx.request({
-        url: "https://www.fastmock.site/mock/6dd3960d7fffa659b497964970be64c3/gugutu/queryShareInfo",
+        url: "https://www.fastmock.site/mock/6dd3960d7fffa659b497964970be64c3/gugutu/queryConfigData",
         success: (res) => {
-          this.shareInfo = res.data.data;
+          console.log(res);
+          const { data } = res.data;
+          this.configData = data;
           this.wx.onShareAppMessage(() => {
-            return this.shareInfo;
+            return this.configData.shareInfo;
+          });
+        },
+        fail: (err) => {
+          console.error(err);
+          this.wx.showModal({
+            title: "服务器异常，请稍后再试",
+            showCancel: false,
           });
         },
       });
