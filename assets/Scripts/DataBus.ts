@@ -52,8 +52,8 @@ export default class DataBus {
   public resultDialog: ResultDialog = null;
 
   public shareInfo = {
-    title: "红伞伞白杆杆，不要让小兔子躺板板~",
-    imageUrl: "images/share.png",
+    title: "",
+    imageUrl: "",
   };
 
   constructor() {
@@ -62,13 +62,17 @@ export default class DataBus {
     instance = this;
 
     if (this.wx) {
-      this.shareInfo = {
-        title: "红伞伞白杆杆，不要让小兔子躺板板~",
-        imageUrl: "images/share.png",
-      };
-      this.wx.onShareAppMessage(() => {
-        return this.shareInfo;
+      this.wx.request({
+        url: "https://www.fastmock.site/mock/6dd3960d7fffa659b497964970be64c3/gugutu/queryShareInfo",
+        success: (res) => {
+          this.shareInfo = res.data.data;
+          this.wx.onShareAppMessage(() => {
+            return this.shareInfo;
+          });
+        },
       });
+      /* 露出分享按钮 */
+      this.wx.showShareMenu();
     }
   }
 
