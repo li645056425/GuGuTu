@@ -40,7 +40,7 @@ export class BeginButton extends Component {
     const userInfoButton = dataBus.wx.createUserInfoButton({
       type: "image",
       image:
-        "https://636c-cloud1-2grx9roq71df4f92-1314029866.tcb.qcloud.la/hssbgg/begin.png?sign=4b1a191b062e6914aa7f402a01b09306&t=1667011522",
+        "https://hzwimspic-1251601690.image.myqcloud.com/10dd9680-6eca-11ed-a84b-e3e5956aeb91_size_298x128",
       style: {
         left,
         top,
