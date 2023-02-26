@@ -11,7 +11,7 @@ function draw({ template, style }) {
 }
 
 function getScoreWeight({ lingzhiNum, scoreNum, duration }) {
-  return lingzhiNum * 1000 + scoreNum + 60000 / duration;
+  return lingzhiNum * 1000 + scoreNum + (duration ? 60000 / duration : 0);
 }
 
 function getScore(kvDataList) {

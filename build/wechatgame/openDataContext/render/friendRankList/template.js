@@ -17,6 +17,7 @@ function getDataTemplate() {
           .sort((item1, item2) => {
             return item2.scoreWeight - item1.scoreWeight;
           });
+        console.log(rankList);
         const list = rankList
           .map(
             (rankItem, index) =>
