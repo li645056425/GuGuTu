@@ -15,18 +15,28 @@ const dataBus = new DataBus();
 
 const designSize = view.getDesignResolutionSize();
 
-@ccclass("BeginButton")
-export class BeginButton extends Component {
+@ccclass("StartButton")
+export class StartButton extends Component {
   private _buttonClicked = false;
 
   start() {
+    this.node.active = false;
+    this.createBeginButton();
     if (!!dataBus.wx) {
-      this.node.active = false;
-      this.createUserInfoButton();
+      // this.createUserInfoButton();
     }
   }
 
   update(deltaTime: number) {}
+
+  createBeginButton() {
+    let interval = setInterval(() => {
+      if (dataBus.allLoaded) {
+        this.node.active = true
+        clearInterval(interval)
+      }
+    }, 100)
+  }
 
   createUserInfoButton() {
     let interval = setInterval(() => {
@@ -40,6 +50,7 @@ export class BeginButton extends Component {
         const top = window.innerHeight * widget.top;
         const width = window.innerWidth * (1 - widget.left - widget.right);
         const height = width * (transform.height / transform.width);
+        // 需更新微信用户隐私
         const userInfoButton = dataBus.wx.createUserInfoButton({
           type: "image",
           image: dataBus.configData?.startButton.imgUrl,

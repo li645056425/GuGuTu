@@ -61,7 +61,7 @@
         "_value": false
       },
       "intersection-2d": {
-        "_value": false
+        "_value": true
       },
       "primitive": {
         "_value": false
@@ -119,6 +119,7 @@
       "audio",
       "base",
       "gfx-webgl",
+      "intersection-2d",
       "physics-ammo",
       "profiler",
       "ui"
